@@ -1,9 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
 .sidenav-container {
   height: 100%;
 }
 
 .sidenav {
-  width: 200px;
+  width: 230px;
 }
 
 .sidenav .mat-toolbar {

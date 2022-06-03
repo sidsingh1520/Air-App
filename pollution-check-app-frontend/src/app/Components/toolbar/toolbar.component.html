@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" mode="side" fixedInViewport>
+    <mat-toolbar>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        (click)="titleFlag = !titleFlag"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Pollution-Check</span>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" matTooltip="Home">
+        <mat-icon mat-list-icon class="">home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-list-item matTooltip="searchAqi" routerLink="search">
+        <mat-icon mat-list-icon class="">search</mat-icon>
+        <span>Search AQI</span>
+      </a>
+      <a mat-list-item matTooltip="Login" routerLink="/accounts/login">
+        <mat-icon mat-list-icon class="">login</mat-icon>
+        <span>Sign In</span>
+      </a>
+    </mat-nav-list>
+    <!-- <mat-nav-list>
+      <a mat-list-item routerLink="/home">Home</a>
+      <a mat-list-item routerLink="/register">Register</a>
+      <a mat-list-item routerLink="/login">Login</a>
+    </mat-nav-list> -->
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        (click)="titleFlag = !titleFlag"
+        *ngIf="titleFlag"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span *ngIf="titleFlag">Pollution-Check</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
