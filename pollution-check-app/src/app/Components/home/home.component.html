@@ -1,0 +1,71 @@
+<div class="container">
+  <h2>Search For Air Quality</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Select Country</mat-label>
+        <mat-select
+          required
+          name="country"
+          [(ngModel)]="selectedCountry"
+          (selectionChange)="onSelectCountry($event)"
+        >
+          <mat-option
+            *ngFor="let t of temp_countries"
+            value="{{ t.country }}"
+            >{{ t.country }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Select State</mat-label>
+        <mat-select
+          required
+          name="state"
+          [(ngModel)]="selectedState"
+          (selectionChange)="onSelectState($event)"
+        >
+          <mat-option *ngFor="let t of temp_states" value="{{ t.state }}">{{
+            t.state
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Select City</mat-label>
+        <mat-select required name="city" [(ngModel)]="selectedCity">
+          <mat-option *ngFor="let t of temp_cities" value="{{ t.city }}">{{
+            t.city
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- <div class="form-control">
+    <mat-form-field appearance="outline">
+        <mat-label>Select Station</mat-label>
+        <mat-select required  name="station"   [(ngModel)]="selectedStation">
+          <mat-option *ngFor="let t of temp_stations"  value={{t.station}}>{{t.station}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div> -->
+    <button type="submit" color="primary" mat-raised-button>
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </form>
+
+  <div *ngIf="pollution" class="container">
+    <h2>Air Quality in {{ pollution.data.city }}</h2>
+    <mat-card class="example-card">
+      <mat-card-subtitle>Live AQI Index</mat-card-subtitle>
+      <mat-card-title>{{ pollution.data.city }}</mat-card-title>
+      <mat-card-content>
+        <p>US AQI : {{ aqius }}</p>
+      </mat-card-content>
+      <mat-divider inset></mat-divider>
+    </mat-card>
+  </div>
+</div>
