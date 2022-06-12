@@ -10,9 +10,10 @@ export class SearchAqiComponent implements OnInit {
   temp_countries: any
   temp_states: any
   temp_cities: any
-  temp_stations: any
+  temp_neareastData: any
   pollution: any
   aqius!: number
+  aqius_nearest!:number
   selectedCountry: string = ''
   selectedState: string = ''
   selectedCity: string = ''
@@ -22,6 +23,10 @@ export class SearchAqiComponent implements OnInit {
   ngOnInit(): void {
     this.iqair.getCountries().subscribe((country) => {
       this.temp_countries = country.data
+    })
+    this.iqair.getNearestAqi().subscribe((data)=>{
+      this.temp_neareastData=data;
+      this.aqius_nearest = this.temp_neareastData.data.current.pollution.aqius
     })
   }
   onSelectCountry(country: any) {
@@ -48,7 +53,6 @@ export class SearchAqiComponent implements OnInit {
         this.selectedCountry,
         this.selectedState,
         this.selectedCity,
-        this.selectedStation,
       )
       .subscribe((data) => {
         this.pollution = data

@@ -13,7 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 // import {MatRippleModule} from '@angular/material/core';
 // import {MatChipsModule} from '@angular/material/chips';
-// import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import {MatProgressBarModule} from '@angular/material/progress-bar';
 const modules = [
   MatButtonModule,
@@ -29,7 +29,7 @@ const modules = [
   MatCardModule,
   // MatRippleModule,
   // MatChipsModule,
-  // MatSnackBarModule,
+  MatSnackBarModule,
   // MatProgressBarModule
 ];
 

@@ -13,5 +13,6 @@ public class CityPollutionData {
     private String city;
     private String state;
     private String country;
+    private Location location;
     private Current current;
 }

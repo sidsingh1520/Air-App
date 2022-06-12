@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, retry, throwError } from 'rxjs';
 const tkey='cd521cd9-771c-4f2b-a2ff-d477fd689328'
 const key='c1ed9fe5-1a48-434d-a1d4-30d6a50accce'
-const URL_COUNTRY = 'http://api.airvisual.com/v2/countries?key='+key;
+const URL_COUNTRY = 'http://localhost:8000/api/v1/countries';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -24,21 +24,21 @@ export class IqairService {
   }
 
   getStates(country: string) {
-    return this.http.get<any>('http://api.airvisual.com/v2/states?country='+country+'&key='+key).pipe(retry(0), catchError(this.handleError));
+    return this.http.get<any>('http://localhost:8000/api/v1/states/'+country).pipe(retry(0), catchError(this.handleError));
   }
 
   getCities(country:string,state:string){
-    return this.http.get<any>('http://api.airvisual.com/v2/cities?state='+state+'&country='+country+'&key='+key).pipe(retry(0),catchError(this.handleError));
+    return this.http.get<any>('http://localhost:8000/api/v1/cities/'+country+'/'+state).pipe(retry(0),catchError(this.handleError));
   }
 
   
-  getStations(country:string,state:string,city:string){
-    return this.http.get<any>('http://api.airvisual.com/v2/stations?city='+city+'&state='+state+'&country='+country+'&key='+key).pipe(retry(0),catchError(this.handleError));
+  getNearestAqi(){
+    return this.http.get<any>('http://localhost:8000/api/v1/nearest').pipe(retry(0),catchError(this.handleError));
   }
 
 
-  getDataStation(country:string,state:string,city:string,station:string){
-    return this.http.get<any>('http://api.airvisual.com/v2/city?city='+city+'&state='+state+'&country='+country+'&key='+key).pipe(retry(0),catchError(this.handleError));
+  getDataStation(country:string,state:string,city:string){
+    return this.http.get<any>('http://localhost:8000/api/v1/cityData/'+country+'/'+state+'/'+city).pipe(retry(0),catchError(this.handleError));
   }
 
 

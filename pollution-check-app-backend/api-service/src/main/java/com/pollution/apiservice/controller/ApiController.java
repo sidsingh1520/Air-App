@@ -4,14 +4,12 @@ import com.pollution.apiservice.domain.*;
 import com.pollution.apiservice.service.ApiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1")
 public class ApiController {
     private ApiService apiService;
@@ -30,7 +28,7 @@ public class ApiController {
     }
 
     @GetMapping("/states/{country}")
-    public ResponseEntity<State> getCountries(@PathVariable("country") String country){
+    public ResponseEntity<State> getStates(@PathVariable("country") String country){
         State stateData = apiService.getAllStates(country);
         if(stateData == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

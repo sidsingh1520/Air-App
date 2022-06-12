@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<!-- <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" mode="side" fixedInViewport>
     <mat-toolbar>
       <button
@@ -21,16 +21,15 @@
         <mat-icon mat-list-icon class="">search</mat-icon>
         <span>Search AQI</span>
       </a>
-      <a mat-list-item matTooltip="Login" routerLink="/accounts/login">
+      <a *ngIf="!isLoggedIn" mat-list-item matTooltip="Login" routerLink="/accounts/login">
         <mat-icon mat-list-icon class="">login</mat-icon>
         <span>Sign In</span>
       </a>
+      <a *ngIf="isLoggedIn" mat-list-item matTooltip="Logout" (click)="logout()">
+        <mat-icon mat-list-icon class="">logout</mat-icon>
+        <span>Logout</span>
+      </a>
     </mat-nav-list>
-    <!-- <mat-nav-list>
-      <a mat-list-item routerLink="/home">Home</a>
-      <a mat-list-item routerLink="/register">Register</a>
-      <a mat-list-item routerLink="/login">Login</a>
-    </mat-nav-list> -->
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -46,7 +45,23 @@
       </button>
       <span *ngIf="titleFlag">Pollution-Check</span>
     </mat-toolbar>
-    <!-- Add Content Here -->
+    
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Pollution Check App</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button routerLink=""> Home</a>
+      <a *ngIf="!isLoggedIn" mat-button routerLink="/accounts/login"> Login</a>
+      <a mat-button routerLink="search"> Search</a>
+      <a *ngIf="isLoggedIn" mat-button (click)="logout()"> Logout</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+

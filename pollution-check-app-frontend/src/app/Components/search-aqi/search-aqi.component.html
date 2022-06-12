@@ -1,3 +1,4 @@
+<app-toolbar></app-toolbar>
 <img
   class="background-image"
   src="assets\images\search-background.jpg"
@@ -46,14 +47,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <!-- <div class="form-control">
-      <mat-form-field appearance="outline">
-          <mat-label>Select Station</mat-label>
-          <mat-select required  name="station"   [(ngModel)]="selectedStation">
-            <mat-option *ngFor="let t of temp_stations"  value={{t.station}}>{{t.station}}</mat-option>
-          </mat-select>
-      </mat-form-field>
-  </div> -->
+
     <button type="submit" color="primary" mat-raised-button>
       <mat-icon>search</mat-icon>
       Search
@@ -71,4 +65,16 @@
       <mat-divider inset></mat-divider>
     </mat-card>
   </div>
+</div>
+
+<div *ngIf="temp_neareastData" class="container">
+  <h2>Air Quality in {{ temp_neareastData.data.city }}</h2>
+  <mat-card class="example-card">
+    <mat-card-subtitle>Nearest City Live AQI Index</mat-card-subtitle>
+    <mat-card-title>{{ temp_neareastData.data.city }}</mat-card-title>
+    <mat-card-content>
+      <p>US AQI : {{ aqius_nearest }}</p>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+  </mat-card>
 </div>

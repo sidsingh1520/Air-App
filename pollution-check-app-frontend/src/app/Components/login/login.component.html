@@ -1,3 +1,4 @@
+<app-toolbar></app-toolbar>
 <img class="background-image" src="assets\images\login-background.jpg" alt="" />
 <div class="container">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -7,16 +8,16 @@
         <mat-label>Username</mat-label>
         <input
           matInput
-          formControlName="username"
+          formControlName="email"
           placeholder="Provide your email"
           type="text"
         />
         <mat-icon matSuffix>email_outline</mat-icon>
         <mat-hint>Username must be least 6 character in length.</mat-hint>
-        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
           Username is required
         </mat-error>
-        <mat-error *ngIf="loginForm.get('username')?.hasError('minlength')">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('minlength')">
           Username must be least 6 character in length
         </mat-error>
       </mat-form-field>
