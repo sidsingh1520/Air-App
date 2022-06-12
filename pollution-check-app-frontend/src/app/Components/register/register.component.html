@@ -1,86 +1,94 @@
 <div class="container">
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
-      <h2>Register</h2>
-      <div class="form-control">
-        <mat-form-field appearance="outline">
-          <mat-label>User Name</mat-label>
-          <input
-            matInput
-            formControlName="name"
-            placeholder="Provide your user name"
-            type="text"
-          />
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
-            UserName is required
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('name')?.hasError('minlength')">
-            UserName should be of atleast 6 characters.
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-control">
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input
-            formControlName="email"
-            matInput
-            placeholder="Provide your email"
-            type="email"
-          />
-          <mat-icon matSuffix>email_outline</mat-icon>
-          <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
-            Email is required
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">
-            Email is not Valid Pattern
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-control">
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            placeholder="Provide your password"
-            type="password"
-          />
-          <mat-icon matSuffix>lock</mat-icon>
-          <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
-            Password is required
-          </mat-error>
-          <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
-            Password must be least 5 charecter in length
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-control">
-        <mat-form-field appearance="outline">
-          <mat-label>Confirm Password</mat-label>
-          <input
-            matInput
-            formControlName="confirmPassword"
-            placeholder="Confirm your password"
-            type="password"
-          />
-          <mat-icon matSuffix>lock</mat-icon>
-          <mat-error
-            *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
-          >
-            Password is required
-          </mat-error>
-          <mat-error
-            *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
-          >
-            Password must be least 5 charecter in length
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <button [disabled]="!registerForm.valid" type="submit" color="primary" mat-raised-button>
-        <mat-icon>save</mat-icon>
-        Create
-      </button>
-    </form>
-  </div>
-  
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <h2>Register</h2>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>User Name</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Provide your user name"
+          type="text"
+        />
+        <mat-icon matSuffix>account_circle</mat-icon>
+        <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+          UserName is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('name')?.hasError('minlength')">
+          UserName should be of atleast 6 characters.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          formControlName="email"
+          matInput
+          placeholder="Provide your email"
+          type="email"
+        />
+        <mat-icon matSuffix>email_outline</mat-icon>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">
+          Email is not Valid Pattern
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Provide your password"
+          type="password"
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          Password must be least 5 charecter in length
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          placeholder="Confirm your password"
+          type="password"
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error
+          *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+        >
+          Password is required
+        </mat-error>
+        <mat-error
+          *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
+        >
+          Password must be least 5 charecter in length
+        </mat-error>
+      </mat-form-field>
+      <mat-hint>
+        Already a Registered User?
+        <a routerLink="/accounts/login">Sign In</a>
+      </mat-hint>
+    </div>
+    <button
+      [disabled]="!registerForm.valid"
+      type="submit"
+      color="primary"
+      mat-raised-button
+    >
+      <mat-icon>save</mat-icon>
+      Create
+    </button>
+  </form>
+</div>

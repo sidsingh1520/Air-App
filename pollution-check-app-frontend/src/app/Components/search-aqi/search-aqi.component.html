@@ -1,4 +1,3 @@
-<app-toolbar></app-toolbar>
 <img
   class="background-image"
   src="assets\images\search-background.jpg"
@@ -16,7 +15,7 @@
           [(ngModel)]="selectedCountry"
           (selectionChange)="onSelectCountry($event)"
         >
-          <mat-option *ngFor="let t of temp_countries" value="{{ t.country }}">
+          <mat-option *ngFor="let t of tempCountries" value="{{ t.country }}">
             {{ t.country }}
           </mat-option>
         </mat-select>
@@ -31,7 +30,7 @@
           [(ngModel)]="selectedState"
           (selectionChange)="onSelectState($event)"
         >
-          <mat-option *ngFor="let t of temp_states" value="{{ t.state }}">
+          <mat-option *ngFor="let t of tempStates" value="{{ t.state }}">
             {{ t.state }}
           </mat-option>
         </mat-select>
@@ -41,7 +40,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Select City</mat-label>
         <mat-select required name="city" [(ngModel)]="selectedCity">
-          <mat-option *ngFor="let t of temp_cities" value="{{ t.city }}">
+          <mat-option *ngFor="let t of tempCities" value="{{ t.city }}">
             {{ t.city }}
           </mat-option>
         </mat-select>
@@ -67,13 +66,13 @@
   </div>
 </div>
 
-<div *ngIf="temp_neareastData" class="container">
-  <h2>Air Quality in {{ temp_neareastData.data.city }}</h2>
+<div *ngIf="tempNearestCity" class="container">
+  <h2>Air Quality in {{ tempNearestCity.data.city }}</h2>
   <mat-card class="example-card">
     <mat-card-subtitle>Nearest City Live AQI Index</mat-card-subtitle>
-    <mat-card-title>{{ temp_neareastData.data.city }}</mat-card-title>
+    <mat-card-title>{{ tempNearestCity.data.city }}</mat-card-title>
     <mat-card-content>
-      <p>US AQI : {{ aqius_nearest }}</p>
+      <p>US AQI : {{ aqiusNearest }}</p>
     </mat-card-content>
     <mat-divider inset></mat-divider>
   </mat-card>

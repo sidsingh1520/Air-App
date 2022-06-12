@@ -7,13 +7,13 @@ import { IqairService } from 'src/app/Services/iqair.service'
   styleUrls: ['./search-aqi.component.css'],
 })
 export class SearchAqiComponent implements OnInit {
-  temp_countries: any
-  temp_states: any
-  temp_cities: any
-  temp_neareastData: any
+  tempCountries: any
+  tempStates: any
+  tempCities: any
+  tempNearestCity: any
   pollution: any
   aqius!: number
-  aqius_nearest!:number
+  aqiusNearest!: number
   selectedCountry: string = ''
   selectedState: string = ''
   selectedCity: string = ''
@@ -22,24 +22,25 @@ export class SearchAqiComponent implements OnInit {
 
   ngOnInit(): void {
     this.iqair.getCountries().subscribe((country) => {
-      this.temp_countries = country.data
+      this.tempCountries = country.data
     })
-    this.iqair.getNearestAqi().subscribe((data)=>{
-      this.temp_neareastData=data;
-      this.aqius_nearest = this.temp_neareastData.data.current.pollution.aqius
+    this.iqair.getNearestAqi().subscribe((data) => {
+      this.tempNearestCity = data
+      this.aqiusNearest = this.tempNearestCity.data.current.pollution.aqius
+      console.log(this.aqiusNearest)
     })
   }
   onSelectCountry(country: any) {
     this.iqair.getStates(String(country.value)).subscribe((state) => {
-      this.temp_states = state.data
+      this.tempStates = state.data
     })
-    console.log(this.temp_states)
+    console.log(this.tempStates)
   }
   onSelectState(state: any) {
     this.iqair
       .getCities(this.selectedCountry, String(state.value))
       .subscribe((city) => {
-        this.temp_cities = city.data
+        this.tempCities = city.data
       })
   }
   // onSelectCity(city:any){

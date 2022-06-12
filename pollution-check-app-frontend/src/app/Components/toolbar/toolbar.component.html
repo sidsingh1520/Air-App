@@ -1,4 +1,4 @@
-<!-- <mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" mode="side" fixedInViewport>
     <mat-toolbar>
       <button
@@ -21,11 +21,21 @@
         <mat-icon mat-list-icon class="">search</mat-icon>
         <span>Search AQI</span>
       </a>
-      <a *ngIf="!isLoggedIn" mat-list-item matTooltip="Login" routerLink="/accounts/login">
+      <a
+        *ngIf="!isLoggedIn"
+        mat-list-item
+        matTooltip="Login"
+        routerLink="/accounts/login"
+      >
         <mat-icon mat-list-icon class="">login</mat-icon>
         <span>Sign In</span>
       </a>
-      <a *ngIf="isLoggedIn" mat-list-item matTooltip="Logout" (click)="logout()">
+      <a
+        *ngIf="isLoggedIn"
+        mat-list-item
+        matTooltip="Logout"
+        (click)="logout()"
+      >
         <mat-icon mat-list-icon class="">logout</mat-icon>
         <span>Logout</span>
       </a>
@@ -45,11 +55,11 @@
       </button>
       <span *ngIf="titleFlag">Pollution-Check</span>
     </mat-toolbar>
-    
+
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container> -->
-<mat-toolbar color="primary">
+</mat-sidenav-container>
+<!-- <mat-toolbar color="primary">
   <mat-toolbar-row>
     <button mat-icon-button>
       <mat-icon>menu</mat-icon>
@@ -63,5 +73,4 @@
       <a *ngIf="isLoggedIn" mat-button (click)="logout()"> Logout</a>
     </div>
   </mat-toolbar-row>
-</mat-toolbar>
-
+</mat-toolbar> -->
