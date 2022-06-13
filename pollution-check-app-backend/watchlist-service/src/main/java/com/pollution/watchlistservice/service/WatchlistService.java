@@ -4,17 +4,22 @@ import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
 
-import com.pollution.watchlistservice.domain.CityData;
-import com.pollution.watchlistservice.dto.AddToWatchlistDto;
-import com.pollution.watchlistservice.dto.RemoveFromWatchlistDto;
-import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
-import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
+import com.pollution.watchlistservice.domain.Location;
+import com.pollution.watchlistservice.domain.WatchlistedCity;
+// import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
+// import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
 
 @Validated
 public interface WatchlistService {
-    CityData addToWishlist(AddToWatchlistDto requestData) throws  CityDataAlreadyExistsException;
+    // WatchlistedCity addToWatchlist(AddToWatchlistDto requestData) throws  CityDataAlreadyExistsException;
 
-    void remove(RemoveFromWatchlistDto requestData) throws CityDataNotFoundException;
+    // void remove(RemoveFromWatchlistDto requestData) throws CityDataNotFoundException;
 
-    List<CityData> listWatchlistByUserId(long userId) throws CityDataNotFoundException;
+    // List<WatchlistedCity> listWatchlistByUserEmail(String userEmail) throws CityDataNotFoundException;
+
+    public List<WatchlistedCity> getList(String userEmail);
+	
+	public boolean addCity(WatchlistedCity city);
+	
+	public boolean removeCity(String userEmail, Location location);
 }

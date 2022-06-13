@@ -1,7 +1,10 @@
 package com.pollution.watchlistservice.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,15 +16,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document("watchlist")
-public class CityData {
+@Entity
+public class WatchlistedCity {
     
     @Id
-    private long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-    private long userId;
+    private String userEmail;
     private String city;
     private String state;
     private String country;
+    private Location location;
     private Pollution pollution;
 }
