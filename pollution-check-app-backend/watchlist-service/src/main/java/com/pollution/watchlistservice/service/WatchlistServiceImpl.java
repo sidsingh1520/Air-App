@@ -4,12 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.pollution.watchlistservice.domain.Location;
 import com.pollution.watchlistservice.domain.WatchlistedCity;
-// import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
-// import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
 import com.pollution.watchlistservice.repository.WatchlistRepository;
 
+@Service
 public class WatchlistServiceImpl implements WatchlistService{
 
     private WatchlistRepository repository;
@@ -17,6 +18,12 @@ public class WatchlistServiceImpl implements WatchlistService{
     public WatchlistServiceImpl(WatchlistRepository repository) {
         this.repository = repository;
     }
+
+    @Override
+    public List<WatchlistedCity> getListByEmail(String userEmail) {
+        return (List<WatchlistedCity>) repository.findByUserEmail(userEmail);
+    }
+
 
     @Override
     public boolean addCity(WatchlistedCity city) {
@@ -37,6 +44,7 @@ public class WatchlistServiceImpl implements WatchlistService{
 		}
     }
 
+    
     @Override
     public boolean removeCity(String userEmail, Location location) {
 
@@ -50,11 +58,6 @@ public class WatchlistServiceImpl implements WatchlistService{
 		}catch (Exception e) {
 			return false;
 		}
-    }
-
-    @Override
-    public List<WatchlistedCity> getList(String userEmail) {
-        return (List<WatchlistedCity>) repository.findByUserEmail(userEmail);
     }
 
     

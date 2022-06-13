@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pollution.watchlistservice.domain.Location;
 import com.pollution.watchlistservice.domain.WatchlistedCity;
-// import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
 import com.pollution.watchlistservice.service.WatchlistService;
 
 @RequestMapping("/api/watchlist")
@@ -32,16 +31,16 @@ public class WatchlistController {
 
 
     @GetMapping
-	public ResponseEntity<?> getList(@RequestParam("userEmail") String userEmail) {
+	public ResponseEntity<?> getListByEmail(@RequestParam("userEmail") String userEmail) {
 		try {
-			return new ResponseEntity<List<WatchlistedCity>>(service.getList(userEmail),HttpStatus.OK);
+			return new ResponseEntity<List<WatchlistedCity>>(service.getListByEmail(userEmail),HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<String>("no",HttpStatus.CONFLICT);
 		}
 	}
 
     @PostMapping
-	public ResponseEntity<?> addCity(@RequestBody WatchlistedCity city) {
+	public ResponseEntity<?> addToWatchlist(@RequestBody WatchlistedCity city) {
 		if(service.addCity(city)) {
 			return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 		}
@@ -49,7 +48,7 @@ public class WatchlistController {
 	}
 
     @DeleteMapping("id")
-	public ResponseEntity<String> deleteallData(@PathVariable String userEmail, @RequestBody Location location){
+	public ResponseEntity<String> removeFromWatchlist(@PathVariable String userEmail, @RequestBody Location location){
 		service.removeCity(userEmail, location);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
