@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HomeComponent } from './Components/home/home.component'
 import { HttpClientModule } from '@angular/common/http'
 import { SearchAqiComponent } from './Components/search-aqi/search-aqi.component'
+import { WatchListComponent } from './Components/watch-list/watch-list.component'
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SearchAqiComponent } from './Components/search-aqi/search-aqi.component
     RegisterComponent,
     HomeComponent,
     SearchAqiComponent,
+    WatchListComponent,
   ],
   imports: [
     BrowserModule,
