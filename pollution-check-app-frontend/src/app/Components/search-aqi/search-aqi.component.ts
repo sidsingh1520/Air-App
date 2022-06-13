@@ -18,6 +18,9 @@ export class SearchAqiComponent implements OnInit {
   selectedState: string = ''
   selectedCity: string = ''
   selectedStation = ''
+  cardSubtitle = 'NEAREST CITY LIVE AQI INDEX'
+  healthStatus = ''
+  location = ''
   constructor(private iqair: IqairService) {}
 
   ngOnInit(): void {
@@ -27,7 +30,13 @@ export class SearchAqiComponent implements OnInit {
     this.iqair.getNearestAqi().subscribe((data) => {
       this.tempNearestCity = data
       this.aqiusNearest = this.tempNearestCity.data.current.pollution.aqius
-      console.log(this.aqiusNearest)
+      this.changeHealthStatus(this.aqiusNearest)
+      this.location =
+        this.tempNearestCity.data.city +
+        ', ' +
+        this.tempNearestCity.data.state +
+        ', ' +
+        this.tempNearestCity.data.country
     })
   }
   onSelectCountry(country: any) {
@@ -56,9 +65,30 @@ export class SearchAqiComponent implements OnInit {
         this.selectedCity,
       )
       .subscribe((data) => {
-        this.pollution = data
+        this.tempNearestCity = data
         console.log(this.pollution)
-        this.aqius = this.pollution.data.current.pollution.aqius
+        this.aqiusNearest = this.tempNearestCity.data.current.pollution.aqius
+        this.changeHealthStatus(this.aqiusNearest)
       })
+    this.cardSubtitle = 'LIVE AQI INDEX'
+
+    this.location =
+      this.selectedCity +
+      ', ' +
+      this.selectedState +
+      ', ' +
+      this.selectedCountry
+  }
+
+  changeHealthStatus(aqi: number) {
+    if (aqi <= 50) {
+      this.healthStatus = 'Healthy'
+    } else if (aqi > 50 && aqi <= 100) {
+      this.healthStatus = 'Moderate'
+    } else if (aqi > 100 && aqi <= 150) {
+      this.healthStatus = 'Sensitive'
+    } else {
+      this.healthStatus = 'Unhealthy'
+    }
   }
 }

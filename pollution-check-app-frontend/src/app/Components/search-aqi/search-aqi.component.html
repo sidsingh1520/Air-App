@@ -6,74 +6,128 @@
 <div class="container">
   <h2>Search For Air Quality</h2>
   <form (ngSubmit)="onSubmit()">
-    <div class="form-control">
-      <mat-form-field appearance="outline">
-        <mat-label>Select Country</mat-label>
-        <mat-select
-          required
-          name="country"
-          [(ngModel)]="selectedCountry"
-          (selectionChange)="onSelectCountry($event)"
-        >
-          <mat-option *ngFor="let t of tempCountries" value="{{ t.country }}">
-            {{ t.country }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="clear all-selects">
+      <div class="form-control">
+        <mat-form-field appearance="outline" class="selects">
+          <mat-label>Select Country</mat-label>
+          <mat-select
+            required
+            name="country"
+            [(ngModel)]="selectedCountry"
+            (selectionChange)="onSelectCountry($event)"
+          >
+            <mat-option *ngFor="let t of tempCountries" value="{{ t.country }}">
+              {{ t.country }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-control">
+        <mat-form-field appearance="outline" class="selects">
+          <mat-label>Select State</mat-label>
+          <mat-select
+            required
+            name="state"
+            [(ngModel)]="selectedState"
+            (selectionChange)="onSelectState($event)"
+          >
+            <mat-option *ngFor="let t of tempStates" value="{{ t.state }}">
+              {{ t.state }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-control">
+        <mat-form-field appearance="outline" class="selects">
+          <mat-label>Select City</mat-label>
+          <mat-select required name="city" [(ngModel)]="selectedCity">
+            <mat-option *ngFor="let t of tempCities" value="{{ t.city }}">
+              {{ t.city }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+        class="search-btn selects"
+      >
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
     </div>
-    <div class="form-control">
-      <mat-form-field appearance="outline">
-        <mat-label>Select State</mat-label>
-        <mat-select
-          required
-          name="state"
-          [(ngModel)]="selectedState"
-          (selectionChange)="onSelectState($event)"
-        >
-          <mat-option *ngFor="let t of tempStates" value="{{ t.state }}">
-            {{ t.state }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="form-control">
-      <mat-form-field appearance="outline">
-        <mat-label>Select City</mat-label>
-        <mat-select required name="city" [(ngModel)]="selectedCity">
-          <mat-option *ngFor="let t of tempCities" value="{{ t.city }}">
-            {{ t.city }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <button type="submit" color="primary" mat-raised-button>
-      <mat-icon>search</mat-icon>
-      Search
-    </button>
   </form>
-
-  <div *ngIf="pollution" class="container">
-    <h2>Air Quality in {{ pollution.data.city }}</h2>
-    <mat-card class="example-card">
-      <mat-card-subtitle>Live AQI Index</mat-card-subtitle>
-      <mat-card-title>{{ pollution.data.city }}</mat-card-title>
-      <mat-card-content>
-        <p>US AQI : {{ aqius }}</p>
-      </mat-card-content>
-      <mat-divider inset></mat-divider>
-    </mat-card>
-  </div>
 </div>
 
-<div *ngIf="tempNearestCity" class="container">
-  <h2>Air Quality in {{ tempNearestCity.data.city }}</h2>
-  <mat-card class="example-card">
-    <mat-card-subtitle>Nearest City Live AQI Index</mat-card-subtitle>
-    <mat-card-title>{{ tempNearestCity.data.city }}</mat-card-title>
-    <mat-card-content>
-      <p>US AQI : {{ aqiusNearest }}</p>
-    </mat-card-content>
-    <mat-divider inset></mat-divider>
-  </mat-card>
+<div
+  class="aqi-card"
+  [ngClass]="{
+    healthy_card: healthStatus === 'Healthy',
+    moderate_card: healthStatus === 'Moderate',
+    sensitive_card: healthStatus === 'Sensitive',
+    unhealthy_card: healthStatus === 'Unhealthy'
+  }"
+>
+  <div
+    class="aqi"
+    [ngClass]="{
+      healthy_aqi: healthStatus === 'Healthy',
+      moderate_aqi: healthStatus === 'Moderate',
+      sensitive_aqi: healthStatus === 'Sensitive',
+      unhealthy_aqi: healthStatus === 'Unhealthy'
+    }"
+  >
+    <div class="aqi-unit">US AQI</div>
+    <div class="aqi-value">{{ aqiusNearest }}</div>
+  </div>
+
+  <div
+    class="status"
+    [ngClass]="{
+      healthy_status: healthStatus === 'Healthy',
+      moderate_status: healthStatus === 'Moderate',
+      sensitive_status: healthStatus === 'Sensitive',
+      unhealthy_status: healthStatus === 'Unhealthy'
+    }"
+  >
+    <div class="status-heading">
+      {{ cardSubtitle }}
+    </div>
+    <div class="status-health">
+      {{ healthStatus }}
+    </div>
+    <div class="status-city">
+      <mat-icon class="location-icon">my_location</mat-icon>
+      <div class="location">
+        {{ location }}
+      </div>
+    </div>
+  </div>
+  <div class="health-image">
+    <img
+      *ngIf="healthStatus == 'Healthy'"
+      mat-card-image
+      src="assets\images\healthy.png"
+      alt="Photo of a Shiba Inu"
+    />
+    <img
+      *ngIf="healthStatus == 'Moderate'"
+      mat-card-image
+      src="assets\images\moderate.png"
+      alt="Photo of a Shiba Inu"
+    />
+    <img
+      *ngIf="healthStatus == 'Sensitive'"
+      mat-card-image
+      src="assets\images\sensitive.png"
+      alt="Photo of a Shiba Inu"
+    />
+    <img
+      *ngIf="healthStatus == 'Unhealthy'"
+      mat-card-image
+      src="assets\images\unhealthy.png"
+      alt="Photo of a Shiba Inu"
+    />
+  </div>
 </div>

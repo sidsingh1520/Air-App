@@ -31,7 +31,10 @@ export class UserService {
   }
 
   validateToken(user: any) {
-    return this.http.post(`${this.baseAuthUrl}/authenticate`, this.httpOptions)
+    return this.http.post(
+      `${this.baseAuthUrl}/authentication`,
+      this.httpOptions,
+    )
   }
 
   //for login user
