@@ -59,75 +59,87 @@
     </div>
   </form>
 </div>
-
-<div
-  class="aqi-card"
-  [ngClass]="{
-    healthy_card: healthStatus === 'Healthy',
-    moderate_card: healthStatus === 'Moderate',
-    sensitive_card: healthStatus === 'Sensitive',
-    unhealthy_card: healthStatus === 'Unhealthy'
-  }"
->
+<form (ngSubmit)="addToWatchList(healthStatus, location, aqiusNearest)">
   <div
-    class="aqi"
+    class="aqi-card"
     [ngClass]="{
-      healthy_aqi: healthStatus === 'Healthy',
-      moderate_aqi: healthStatus === 'Moderate',
-      sensitive_aqi: healthStatus === 'Sensitive',
-      unhealthy_aqi: healthStatus === 'Unhealthy'
+      healthy_card: healthStatus === 'Healthy',
+      moderate_card: healthStatus === 'Moderate',
+      sensitive_card: healthStatus === 'Sensitive',
+      unhealthy_card: healthStatus === 'Unhealthy'
     }"
   >
-    <div class="aqi-unit">US AQI</div>
-    <div class="aqi-value">{{ aqiusNearest }}</div>
-  </div>
+    <div
+      class="aqi"
+      [ngClass]="{
+        healthy_aqi: healthStatus === 'Healthy',
+        moderate_aqi: healthStatus === 'Moderate',
+        sensitive_aqi: healthStatus === 'Sensitive',
+        unhealthy_aqi: healthStatus === 'Unhealthy'
+      }"
+    >
+      <div class="aqi-unit">US AQI</div>
+      <div class="aqi-value">{{ aqiusNearest }}</div>
+    </div>
 
-  <div
-    class="status"
-    [ngClass]="{
-      healthy_status: healthStatus === 'Healthy',
-      moderate_status: healthStatus === 'Moderate',
-      sensitive_status: healthStatus === 'Sensitive',
-      unhealthy_status: healthStatus === 'Unhealthy'
-    }"
-  >
-    <div class="status-heading">
-      {{ cardSubtitle }}
-    </div>
-    <div class="status-health">
-      {{ healthStatus }}
-    </div>
-    <div class="status-city">
-      <mat-icon class="location-icon">my_location</mat-icon>
-      <div class="location">
-        {{ location }}
+    <div
+      class="status"
+      [ngClass]="{
+        healthy_status: healthStatus === 'Healthy',
+        moderate_status: healthStatus === 'Moderate',
+        sensitive_status: healthStatus === 'Sensitive',
+        unhealthy_status: healthStatus === 'Unhealthy'
+      }"
+    >
+      <div class="status-heading">
+        {{ cardSubtitle }}
+      </div>
+      <div class="status-health">
+        {{ healthStatus }}
+      </div>
+      <div class="status-city">
+        <mat-icon class="location-icon">my_location</mat-icon>
+        <div class="location">
+          {{ location }}
+        </div>
       </div>
     </div>
+    <div class="health-image">
+      <img
+        *ngIf="healthStatus == 'Healthy'"
+        mat-card-image
+        src="assets\images\healthy.png"
+        alt="Photo of a Shiba Inu"
+      />
+      <img
+        *ngIf="healthStatus == 'Moderate'"
+        mat-card-image
+        src="assets\images\moderate.png"
+        alt="Photo of a Shiba Inu"
+      />
+      <img
+        *ngIf="healthStatus == 'Sensitive'"
+        mat-card-image
+        src="assets\images\sensitive.png"
+        alt="Photo of a Shiba Inu"
+      />
+      <img
+        *ngIf="healthStatus == 'Unhealthy'"
+        mat-card-image
+        src="assets\images\unhealthy.png"
+        alt="Photo of a Shiba Inu"
+      />
+    </div>
+    <div class="watchlist">
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+        class="watchlist-btn"
+      >
+        <mat-icon>add</mat-icon>
+        Add To Watchlist
+      </button>
+    </div>
   </div>
-  <div class="health-image">
-    <img
-      *ngIf="healthStatus == 'Healthy'"
-      mat-card-image
-      src="assets\images\healthy.png"
-      alt="Photo of a Shiba Inu"
-    />
-    <img
-      *ngIf="healthStatus == 'Moderate'"
-      mat-card-image
-      src="assets\images\moderate.png"
-      alt="Photo of a Shiba Inu"
-    />
-    <img
-      *ngIf="healthStatus == 'Sensitive'"
-      mat-card-image
-      src="assets\images\sensitive.png"
-      alt="Photo of a Shiba Inu"
-    />
-    <img
-      *ngIf="healthStatus == 'Unhealthy'"
-      mat-card-image
-      src="assets\images\unhealthy.png"
-      alt="Photo of a Shiba Inu"
-    />
-  </div>
-</div>
+</form>

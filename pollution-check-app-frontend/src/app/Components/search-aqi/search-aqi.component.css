@@ -188,6 +188,26 @@ mat-icon {
 
 /*AQI CARD*/
 
+/*WATCHLIST BUTTON*/
+.watchlist {
+  margin-top: 100px;
+}
+.watchlist-btn {
+  display: block;
+  margin-top: 30px;
+  padding: 10px 10px;
+  font-size: 1.1rem;
+  padding-right: 20px;
+  float: left;
+  background-color: white;
+  color: #3f51b5;
+}
+
+.add-icon {
+  margin-bottom: 5px;
+}
+/*WATCHLIST BUTTON*/
+
 .clear:before,
 .clear:after {
   content: '';

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import { CityData } from 'src/app/Models/city-data'
 import { IqairService } from 'src/app/Services/iqair.service'
+import { WatchlistService } from 'src/app/Services/watchlist.service'
 
 @Component({
   selector: 'app-search-aqi',
@@ -21,7 +23,13 @@ export class SearchAqiComponent implements OnInit {
   cardSubtitle = 'NEAREST CITY LIVE AQI INDEX'
   healthStatus = ''
   location = ''
-  constructor(private iqair: IqairService) {}
+
+  cityData: CityData = new CityData('', '', '', '', 0, '')
+
+  constructor(
+    private iqair: IqairService,
+    private watchlist: WatchlistService,
+  ) {}
 
   ngOnInit(): void {
     this.iqair.getCountries().subscribe((country) => {
@@ -52,11 +60,7 @@ export class SearchAqiComponent implements OnInit {
         this.tempCities = city.data
       })
   }
-  // onSelectCity(city:any){
-  //   this.iqair.getStations(this.selectedCountry,this.selectedState,String(city.value)).subscribe((station)=>{
-  //     this.temp_stations=station.data;
-  //   })
-  // }
+
   onSubmit() {
     this.iqair
       .getDataStation(
@@ -90,5 +94,24 @@ export class SearchAqiComponent implements OnInit {
     } else {
       this.healthStatus = 'Unhealthy'
     }
+  }
+
+  // WATCHLIST
+
+  addToWatchList(healthStatus: string, location: string, aqiUS: number) {
+    let city = location.split(',')[0]
+    let state = location.split(',')[1]
+    let country = location.split(',')[2]
+    this.cityData = new CityData(
+      'aaquibazhar1802@gmail.com',
+      city,
+      state,
+      country,
+      aqiUS,
+      healthStatus,
+    )
+    this.watchlist.addToWatchList(this.cityData).subscribe((data) => {
+      console.log(data)
+    })
   }
 }
