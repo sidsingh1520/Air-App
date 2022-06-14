@@ -2,55 +2,64 @@ package com.pollution.watchlistservice.controller;
 
 import java.util.List;
 
+import com.pollution.watchlistservice.dto.CityDataDto;
+import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
+import com.pollution.watchlistservice.service.WatchlistServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.pollution.watchlistservice.domain.Location;
-import com.pollution.watchlistservice.domain.WatchlistedCity;
-import com.pollution.watchlistservice.service.WatchlistService;
 
-@RequestMapping("/api/watchlist")
-@CrossOrigin(value = "*")
+import com.pollution.watchlistservice.domain.CityData;
+import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
+
 @RestController
+@RequestMapping("/api/v1/watchlist")
+@CrossOrigin(origins = "http://localhost:4200")
 public class WatchlistController {
     
-    private WatchlistService service;
+    private WatchlistServiceImpl service;
 
-    public WatchlistController(WatchlistService service) {
+    public WatchlistController(WatchlistServiceImpl service) {
         this.service = service;
     }
 
 
-    @GetMapping
-	public ResponseEntity<?> getListByEmail(@RequestParam("userEmail") String userEmail) {
-		try {
-			return new ResponseEntity<List<WatchlistedCity>>(service.getListByEmail(userEmail),HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<String>("no",HttpStatus.CONFLICT);
-		}
-	}
+    @GetMapping("/{userEmail}")
+    public ResponseEntity<List<CityData>> findAll(@PathVariable String userEmail) throws CityDataNotFoundException {
 
-    @PostMapping
-	public ResponseEntity<?> addToWatchlist(@RequestBody WatchlistedCity city) {
-		if(service.addCity(city)) {
-			return new ResponseEntity<String>("ok", HttpStatus.CREATED);
-		}
-		else return new ResponseEntity<String>("no", HttpStatus.CONFLICT);
-	}
+        List<CityData> response = service.findCityDataByUserEmail(userEmail);
+        if(response.isEmpty()){
+            throw new CityDataNotFoundException("The data for this city doesn't exist");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
-    @DeleteMapping("id")
-	public ResponseEntity<String> removeFromWatchlist(@PathVariable String userEmail, @RequestBody Location location){
-		service.removeCity(userEmail, location);
-		return new ResponseEntity<String>(HttpStatus.OK);
-	}
 
+    @PostMapping({"", "/"})
+    public ResponseEntity<CityData> add(@RequestBody CityDataDto requestData) throws CityDataAlreadyExistsException {
+        CityData cityData = new CityData(requestData);
+        CityData response= service.addToWishlist(cityData);
+        if(response == null){
+            throw new CityDataAlreadyExistsException("The data for this city already exists.");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CityData> remove(@PathVariable Integer id) throws CityDataNotFoundException {
+        service.remove(id);
+       return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CityData> updateAqiUS(@RequestBody CityDataDto requestData, @PathVariable Integer id) throws CityDataNotFoundException {
+        CityData cityData = new CityData(requestData);
+        CityData response = service.updateAqiUS(cityData, id);
+        if(response == null){
+            throw new CityDataNotFoundException("The data for this city doesn't exist");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }

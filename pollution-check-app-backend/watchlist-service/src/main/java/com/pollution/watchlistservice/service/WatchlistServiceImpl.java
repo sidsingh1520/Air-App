@@ -1,64 +1,55 @@
 package com.pollution.watchlistservice.service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.pollution.watchlistservice.domain.CityData;
+import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
+import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
+import com.pollution.watchlistservice.repository.CityDataRepository;
 import org.springframework.stereotype.Service;
-
-import com.pollution.watchlistservice.domain.Location;
-import com.pollution.watchlistservice.domain.WatchlistedCity;
-import com.pollution.watchlistservice.repository.WatchlistRepository;
 
 @Service
 public class WatchlistServiceImpl implements WatchlistService{
+    private CityDataRepository cityDataRepository;
 
-    private WatchlistRepository repository;
-
-    public WatchlistServiceImpl(WatchlistRepository repository) {
-        this.repository = repository;
+    public WatchlistServiceImpl(CityDataRepository cityDataRepository) {
+        this.cityDataRepository = cityDataRepository;
     }
 
     @Override
-    public List<WatchlistedCity> getListByEmail(String userEmail) {
-        return (List<WatchlistedCity>) repository.findByUserEmail(userEmail);
-    }
+    public CityData addToWishlist(CityData requestData){
+        Optional<CityData> cityDataOptional = cityDataRepository.findByUserEmailAndCityAndState(requestData.getUserEmail(), requestData.getCity(), requestData.getState());
+        if(cityDataOptional.isPresent()){
+            return null;
+        }
+        return cityDataRepository.save(requestData);
 
+    }
 
     @Override
-    public boolean addCity(WatchlistedCity city) {
-        
-        try {
-			String email1 = city.getUserEmail();
-            Location location1 = city.getLocation();
-			List<WatchlistedCity> list = (List<WatchlistedCity>) repository.findAll();
-			for (WatchlistedCity temp : list) {
-				if((temp.getUserEmail().equalsIgnoreCase(email1)) && (Arrays.equals(temp.getLocation().getCoordinates(), location1.getCoordinates()))) {
-					return true;
-				}
-			}
-			repository.save(city);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+    public void remove(Integer id) throws CityDataNotFoundException {
+        Optional<CityData> cityDataOptional = cityDataRepository.findById(id);
+        if(cityDataOptional.isEmpty()){
+            throw new CityDataNotFoundException("The data for this city doesn't exist");
+        }
+        cityDataRepository.deleteById(id);
     }
 
-    
     @Override
-    public boolean removeCity(String userEmail, Location location) {
-
-        try {
-			Optional<WatchlistedCity> optional = repository.findByUserEmailAndLocation(userEmail, location);
-			if(optional.isPresent()){
-                repository.delete(optional.get());
-                return true;
-            }
-            return false;	
-		}catch (Exception e) {
-			return false;
-		}
+    public List<CityData> findCityDataByUserEmail(String userEmail) {
+        return cityDataRepository.findByUserEmail(userEmail);
     }
 
-    
+    @Override
+    public CityData updateAqiUS(CityData requestData, Integer id) {
+        Optional<CityData> existingCityDataOptional = cityDataRepository.findById(id);
+        CityData existingCityData;
+        if(existingCityDataOptional.isPresent()){
+            existingCityData = existingCityDataOptional.get();
+            existingCityData.setAqiUS(requestData.getAqiUS());
+            return cityDataRepository.save(existingCityData);
+        }
+        return null;
+    }
 }
