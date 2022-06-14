@@ -38,8 +38,9 @@ export class UserService {
   }
 
   //for login user
-  loginUser(token: string) {
+  loginUser(token: string,email:string) {
     localStorage.setItem('token', token)
+    localStorage.setItem('email', email)
     return true
   }
 
@@ -54,6 +55,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('email')
     return true
   }
 

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.value);
     this.userService.doLogin(this.loginForm.value).subscribe((response)=>{
       this.result=response;
-      this.userService.loginUser(this.result.token);
+      this.userService.loginUser(this.result.token,this.loginForm.value.email);
       this.openSnackBar(this.result.message,"Ok");
       this.router.navigate(['search'])
 

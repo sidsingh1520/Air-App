@@ -44,8 +44,15 @@ export class WatchlistService {
       )
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('Something bad happened; please try again later.'),
-    )
+    if(error.status===409){
+      return throwError(
+        () => new Error('You have already added this city to watchlist'),
+      )
+    }
+    else {
+      return throwError(
+        () => new Error('Something went bad ! Please try again after sometime'),
+      )
+    }
   }
 }

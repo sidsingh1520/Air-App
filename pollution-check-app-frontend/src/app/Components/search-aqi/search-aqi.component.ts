@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { CityData } from 'src/app/Models/city-data'
 import { IqairService } from 'src/app/Services/iqair.service'
 import { WatchlistService } from 'src/app/Services/watchlist.service'
@@ -29,23 +30,24 @@ export class SearchAqiComponent implements OnInit {
   constructor(
     private iqair: IqairService,
     private watchlist: WatchlistService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.iqair.getCountries().subscribe((country) => {
-      this.tempCountries = country.data
-    })
-    this.iqair.getNearestAqi().subscribe((data) => {
-      this.tempNearestCity = data
-      this.aqiusNearest = this.tempNearestCity.data.current.pollution.aqius
-      this.changeHealthStatus(this.aqiusNearest)
-      this.location =
-        this.tempNearestCity.data.city +
-        ', ' +
-        this.tempNearestCity.data.state +
-        ', ' +
-        this.tempNearestCity.data.country
-    })
+    // this.iqair.getCountries().subscribe((country) => {
+    //   this.tempCountries = country.data
+    // })
+    // this.iqair.getNearestAqi().subscribe((data) => {
+    //   this.tempNearestCity = data
+    //   this.aqiusNearest = this.tempNearestCity.data.current.pollution.aqius
+    //   this.changeHealthStatus(this.aqiusNearest)
+    //   this.location =
+    //     this.tempNearestCity.data.city +
+    //     ', ' +
+    //     this.tempNearestCity.data.state +
+    //     ', ' +
+    //     this.tempNearestCity.data.country
+    // })
   }
   onSelectCountry(country: any) {
     this.iqair.getStates(String(country.value)).subscribe((state) => {
@@ -96,22 +98,39 @@ export class SearchAqiComponent implements OnInit {
     }
   }
 
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action,{
+      duration:2000
+    });
+  }
   // WATCHLIST
 
   addToWatchList(healthStatus: string, location: string, aqiUS: number) {
-    let city = location.split(',')[0]
-    let state = location.split(',')[1]
-    let country = location.split(',')[2]
+    
+    let locationData: string[] = location.split(',')
+    let email=localStorage.getItem("email")
+    if(email==null){
+      email="nouser"
+    }
+    let city = locationData[0].trim()
+    let state = locationData[1].trim()
+    let country = locationData[2].trim()
     this.cityData = new CityData(
-      'aaquibazhar1802@gmail.com',
+      email,
       city,
       state,
       country,
       aqiUS,
       healthStatus,
     )
+    console.log(this.cityData)
     this.watchlist.addToWatchList(this.cityData).subscribe((data) => {
       console.log(data)
+    },
+    (error)=>{
+      console.log(error)
+      this.openSnackBar(String(error).substring(7),"Ok")
     })
   }
 }
