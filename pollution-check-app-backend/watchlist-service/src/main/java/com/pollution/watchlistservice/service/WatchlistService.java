@@ -1,19 +1,15 @@
 package com.pollution.watchlistservice.service;
 
+import com.pollution.watchlistservice.domain.CityData;
+import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
 import java.util.List;
 
-import org.springframework.validation.annotation.Validated;
-
-import com.pollution.watchlistservice.domain.CityData;
-import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
-import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
-
 public interface WatchlistService {
-    CityData addToWishlist(CityData requestData);
+  CityData addToWishlist(CityData requestData);
 
-    void remove(Integer id) throws CityDataNotFoundException;
+  void remove(Integer id) throws CityDataNotFoundException;
 
-    List<CityData> findCityDataByUserEmail(String userEmail);
+  List<CityData> findCityDataByUserEmail(String userEmail);
 
-    CityData updateAqiUS(CityData requestData, Integer id);
+  CityData updateAqiUS(CityData requestData);
 }

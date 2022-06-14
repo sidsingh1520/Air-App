@@ -53,10 +53,10 @@ public class WatchlistController {
        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CityData> updateAqiUS(@RequestBody CityDataDto requestData, @PathVariable Integer id) throws CityDataNotFoundException {
+    @PutMapping({"", "/"})
+    public ResponseEntity<CityData> updateAqiUS(@RequestBody CityDataDto requestData) throws CityDataNotFoundException {
         CityData cityData = new CityData(requestData);
-        CityData response = service.updateAqiUS(cityData, id);
+        CityData response = service.updateAqiUS(cityData);
         if(response == null){
             throw new CityDataNotFoundException("The data for this city doesn't exist");
         }
