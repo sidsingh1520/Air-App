@@ -6,5 +6,6 @@ export class CityData {
     public country: string,
     public aqiUS: number,
     public healthStatus: string,
+    public id?: number,
   ) {}
 }

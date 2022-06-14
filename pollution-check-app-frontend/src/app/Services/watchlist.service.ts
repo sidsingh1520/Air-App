@@ -21,13 +21,19 @@ export class WatchlistService {
 
   getWatchListByEmail(userEmail: string) {
     return this.http
-      .get<any>(URL_WATCHLIST + userEmail)
+      .get<CityData[]>(URL_WATCHLIST + '/' + userEmail)
       .pipe(retry(0), catchError(this.handleError))
   }
 
   addToWatchList(cityData: CityData) {
     return this.http
       .post<CityData>(URL_WATCHLIST, cityData, httpOptions)
+      .pipe(retry(1), catchError(this.handleError))
+  }
+
+  removeFromWatchList(id: number | undefined) {
+    return this.http
+      .delete<CityData>(URL_WATCHLIST + '/' + id)
       .pipe(retry(1), catchError(this.handleError))
   }
 
@@ -44,12 +50,11 @@ export class WatchlistService {
       )
     }
     // Return an observable with a user-facing error message.
-    if(error.status===409){
+    if (error.status === 409) {
       return throwError(
         () => new Error('You have already added this city to watchlist'),
       )
-    }
-    else {
+    } else {
       return throwError(
         () => new Error('Something went bad ! Please try again after sometime'),
       )

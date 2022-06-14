@@ -10,18 +10,23 @@
       <mat-card-subtitle>CITY AQI INDEX</mat-card-subtitle>
       <mat-card-title class="clear">
         <mat-icon class="location-icon">my_location</mat-icon>
-        <p class="aqi-location">{{ d.location }}</p>
+        <p class="aqi-location">{{ d.city }}, {{ d.state }}, {{ d.country }}</p>
       </mat-card-title>
       <mat-card-content>
-        <div class="aqi-index">US AQI : {{ d.aqius }}</div>
-        <div class="aqi-status">{{ d.status }}</div>
+        <div class="aqi-index">US AQI : {{ d.aqiUS }}</div>
+        <div class="aqi-status">{{ d.healthStatus }}</div>
       </mat-card-content>
       <mat-card-actions>
         <div class="buttons">
           <button mat-fab color="primary" class="refresh-button">
             <mat-icon>refresh</mat-icon>
           </button>
-          <button mat-fab color="warn" class="delete-button">
+          <button
+            (click)="deleteRecord(d.id)"
+            mat-fab
+            color="warn"
+            class="delete-button"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </div>
