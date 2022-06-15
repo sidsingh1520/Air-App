@@ -29,7 +29,12 @@ public class UserController {
 
     @PutMapping("/")
     public ResponseEntity<User> changePassword(@RequestBody User user){
-        User updateUser = userService.updatePassword(user);
+        User updateUser = null;
+        Optional<User> existingUserOpt = userService.getByEmail(user.getEmail());
+        if(existingUserOpt.isPresent()){
+            updateUser = userService.updatePassword(existingUserOpt.get(),user.getPassword());
+            
+        }
         if(updateUser == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

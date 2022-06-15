@@ -21,13 +21,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updatePassword(User user) {
-        Optional<User> existingUserOpt = userRepository.findById(user.getEmail());
-        if(existingUserOpt.isPresent()){
-            User existingUser = existingUserOpt.get();
-            existingUser.setPassword(user.getPassword());
-            return existingUser;
-        }
-        return null;
+    public User updatePassword(User user,String password) {
+        user.setPassword(password);
+        return  userRepository.save(user);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
     }
 }
