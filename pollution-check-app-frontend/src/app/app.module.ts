@@ -18,7 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HomeComponent } from './Components/home/home.component'
 import { HttpClientModule } from '@angular/common/http'
 import { SearchAqiComponent } from './Components/search-aqi/search-aqi.component'
-import { WatchListComponent } from './Components/watch-list/watch-list.component'
+import { WatchListComponent } from './Components/watch-list/watch-list.component';
+import { ProfileComponent } from './Components/profile/profile.component';
+import { ConfirmPasswordValidatorDirective } from './Directives/confirm-password-validator.directive'
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { WatchListComponent } from './Components/watch-list/watch-list.component
     HomeComponent,
     SearchAqiComponent,
     WatchListComponent,
+    ProfileComponent,
+    ConfirmPasswordValidatorDirective,
   ],
   imports: [
     BrowserModule,

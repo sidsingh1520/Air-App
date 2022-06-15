@@ -11,8 +11,8 @@ import { UserService } from 'src/app/Services/user.service'
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.minLength(6)]],
-    password: ['', [Validators.required, Validators.minLength(5)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
   })
 
   constructor(
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
         this.userService.loginUser(
           this.result.token,
           this.loginForm.value.email,
+          this.loginForm.value.userName,
         )
         this.openSnackBar(this.result.message, 'Ok')
         this.router.navigate(['search'])
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000,
+      panelClass: ['blue-snackbar'],
     })
   }
 }

@@ -52,6 +52,7 @@ export class WatchListComponent implements OnInit {
         )
         this.watchlist.updateDataInWatchList(newCityData).subscribe((data) => {
           console.log(data)
+          this.openSnackBar('Record updated successfully', 'Ok')
           this.ngOnInit()
         })
       })
@@ -72,6 +73,7 @@ export class WatchListComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000,
+      panelClass: ['blue-snackbar'],
     })
   }
 }

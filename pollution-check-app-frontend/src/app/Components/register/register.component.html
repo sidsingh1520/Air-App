@@ -32,48 +32,56 @@
         <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
           Email is required
         </mat-error>
-        <mat-error *ngIf="registerForm.get('email')?.hasError('pattern')">
-          Email is not Valid Pattern
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+          Email is not Valid
         </mat-error>
       </mat-form-field>
     </div>
     <div class="form-control">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="mat-field">
         <mat-label>Password</mat-label>
         <input
-          matInput
-          formControlName="password"
-          placeholder="Provide your password"
+          name="password"
           type="password"
+          matInput
+          required
+          formControlName="password"
+          (change)="onChange()"
         />
-        <mat-icon matSuffix>lock</mat-icon>
-        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
-          Password is required
+        <mat-error
+          *ngIf="(registerForm.controls['password'].touched || registerForm.controls['password'].dirty) && registerForm.controls['password'].errors?.['required']"
+        >
+          Password is mandatory.
         </mat-error>
-        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
-          Password must be least 5 charecter in length
+        <mat-error
+          *ngIf="(registerForm.controls['password'].touched || registerForm.controls['password'].dirty) && registerForm.controls['password'].errors?.['pattern']"
+        >
+          The password should have atleast 8 characters, a number, an uppercase
+          letter, a lowercase letter and a special character.
         </mat-error>
       </mat-form-field>
     </div>
     <div class="form-control">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="mat-field">
         <mat-label>Confirm Password</mat-label>
         <input
-          matInput
-          formControlName="confirmPassword"
-          placeholder="Confirm your password"
+          name="password"
           type="password"
+          matInput
+          required
+          formControlName="confirmPassword"
+          appConfirmPasswordValidator
+          [password]="passwordTyped"
         />
-        <mat-icon matSuffix>lock</mat-icon>
         <mat-error
-          *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+          *ngIf="(registerForm.controls['confirmPassword'].touched || registerForm.controls['confirmPassword'].dirty) && registerForm.controls['confirmPassword'].errors?.['required']"
         >
-          Password is required
+          Please re-enter your password.
         </mat-error>
         <mat-error
-          *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
+          *ngIf="(registerForm.controls['confirmPassword'].touched || registerForm.controls['confirmPassword'].dirty) && registerForm.controls['confirmPassword'].errors?.['confirmPasswordValid']"
         >
-          Password must be least 5 charecter in length
+          Passwords didn't match
         </mat-error>
       </mat-form-field>
       <mat-hint>

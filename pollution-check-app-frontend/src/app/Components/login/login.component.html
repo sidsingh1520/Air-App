@@ -6,18 +6,17 @@
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input
-          matInput
           formControlName="email"
+          matInput
           placeholder="Provide your email"
-          type="text"
+          type="email"
         />
         <mat-icon matSuffix>email_outline</mat-icon>
-        <mat-hint>Username must be least 6 character in length.</mat-hint>
         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-          Username is required
+          Email is required
         </mat-error>
-        <mat-error *ngIf="loginForm.get('email')?.hasError('minlength')">
-          Username must be least 6 character in length
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+          Email is not Valid
         </mat-error>
       </mat-form-field>
     </div>

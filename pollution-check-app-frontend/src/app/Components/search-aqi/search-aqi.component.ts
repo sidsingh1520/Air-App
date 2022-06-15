@@ -100,6 +100,7 @@ export class SearchAqiComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000,
+      panelClass: ['blue-snackbar'],
     })
   }
   // WATCHLIST

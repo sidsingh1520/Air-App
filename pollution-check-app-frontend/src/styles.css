@@ -8,3 +8,12 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+.blue-snackbar {
+  background-color: #3f51b5;
+  font-weight: 400;
+  color: white;
+}
+.blue-snackbar button {
+  background-color: white;
+  color: #3f51b5;
+}
