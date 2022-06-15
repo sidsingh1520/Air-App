@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
-import { Router } from '@angular/router';
-import { UserService } from 'src/app/Services/user.service';
+import { Router } from '@angular/router'
+import { Observable } from 'rxjs'
+import { UserService } from 'src/app/Services/user.service'
 
 @Component({
   selector: 'app-toolbar',
@@ -9,16 +10,15 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class ToolbarComponent {
   titleFlag = true
-  isLoggedIn:boolean=false;
-  constructor(private user:UserService,private router:Router) {}
+  isLoggedIn$: any
+  constructor(private user: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    this.isLoggedIn=this.user.isLoggedIn();
+    this.isLoggedIn$ = this.user.loggedInStatus
   }
-  logout(){
-    this.user.logout();
-    this.ngOnInit();
+  logout() {
+    this.user.logout()
+    this.ngOnInit()
     this.router.navigate(['accounts/login'])
   }
-
 }

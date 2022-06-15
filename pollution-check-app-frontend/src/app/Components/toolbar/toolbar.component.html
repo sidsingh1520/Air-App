@@ -17,12 +17,26 @@
         <mat-icon mat-list-icon class="">home</mat-icon>
         <span>Home</span>
       </a>
-      <a mat-list-item matTooltip="searchAqi" routerLink="search">
+      <a
+        *ngIf="isLoggedIn$ | async as isLogged"
+        mat-list-item
+        matTooltip="searchAqi"
+        routerLink="search"
+      >
         <mat-icon mat-list-icon class="">search</mat-icon>
         <span>Search AQI</span>
       </a>
       <a
-        *ngIf="!isLoggedIn"
+        *ngIf="isLoggedIn$ | async as isLogged"
+        mat-list-item
+        matTooltip="watchlist"
+        routerLink="history"
+      >
+        <mat-icon mat-list-icon class="">library_books</mat-icon>
+        <span>Watch List</span>
+      </a>
+      <a
+        *ngIf="!(isLoggedIn$ | async) as isLogged"
         mat-list-item
         matTooltip="Login"
         routerLink="/accounts/login"
@@ -31,7 +45,7 @@
         <span>Sign In</span>
       </a>
       <a
-        *ngIf="isLoggedIn"
+        *ngIf="isLoggedIn$ | async as isLogged"
         mat-list-item
         matTooltip="Logout"
         (click)="logout()"

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class UserService {
   httpregOptions: any = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   }
-  isLogged: boolean = false
+  isLogged = new BehaviorSubject<boolean>(this.isLoggedIn())
 
   constructor(private http: HttpClient) {}
 
@@ -38,7 +39,9 @@ export class UserService {
   }
 
   //for login user
-  loginUser(token: string,email:string) {
+  loginUser(token: string, email: string) {
+    this.isLogged.next(true)
+    localStorage.setItem('isLogged', '1')
     localStorage.setItem('token', token)
     localStorage.setItem('email', email)
     return true
@@ -54,6 +57,8 @@ export class UserService {
   }
 
   logout() {
+    this.isLogged.next(false)
+    localStorage.setItem('isLogged', '0')
     localStorage.removeItem('token')
     localStorage.removeItem('email')
     return true
@@ -61,5 +66,9 @@ export class UserService {
 
   getToken() {
     return localStorage.getItem('token')
+  }
+
+  get loggedInStatus() {
+    return this.isLogged.asObservable()
   }
 }

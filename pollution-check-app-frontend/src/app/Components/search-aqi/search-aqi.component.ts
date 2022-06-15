@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { Router } from '@angular/router'
 import { CityData } from 'src/app/Models/city-data'
 import { IqairService } from 'src/app/Services/iqair.service'
+import { UserService } from 'src/app/Services/user.service'
 import { WatchlistService } from 'src/app/Services/watchlist.service'
+import { ToolbarComponent } from '../toolbar/toolbar.component'
 
 @Component({
   selector: 'app-search-aqi',
@@ -31,9 +34,13 @@ export class SearchAqiComponent implements OnInit {
     private iqair: IqairService,
     private watchlist: WatchlistService,
     private _snackBar: MatSnackBar,
+    private router: Router,
+    private user: UserService,
   ) {}
 
   ngOnInit(): void {
+    let toolbar = new ToolbarComponent(this.user, this.router)
+    toolbar.ngOnInit()
     this.iqair.getCountries().subscribe((country) => {
       this.tempCountries = country.data
     })
