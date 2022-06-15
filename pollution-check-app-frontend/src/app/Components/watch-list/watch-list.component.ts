@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { CityData } from 'src/app/Models/city-data'
+import { IqairService } from 'src/app/Services/iqair.service'
 import { WatchlistService } from 'src/app/Services/watchlist.service'
 
 @Component({
@@ -14,6 +15,7 @@ export class WatchListComponent implements OnInit {
   constructor(
     private watchlist: WatchlistService,
     private _snackBar: MatSnackBar,
+    private iqair: IqairService,
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,37 @@ export class WatchListComponent implements OnInit {
       this.openSnackBar('Record deleted successfully', 'Ok')
       this.ngOnInit()
     })
+  }
+  updateRecord(cityData: CityData) {
+    this.iqair
+      .getDataStation(cityData.country, cityData.state, cityData.city)
+      .subscribe((data) => {
+        let newCityData = new CityData(
+          cityData.userEmail,
+          data.data.city,
+          data.data.state,
+          data.data.country,
+          Number(data.data.current.pollution.aqius),
+          this.calculateHealthStatus(data.data.current.pollution.aqius),
+          cityData.id,
+        )
+        this.watchlist.updateDataInWatchList(newCityData).subscribe((data) => {
+          console.log(data)
+          this.ngOnInit()
+        })
+      })
+  }
+
+  calculateHealthStatus(aqi: number) {
+    if (aqi <= 50) {
+      return 'Healthy'
+    } else if (aqi > 50 && aqi <= 100) {
+      return 'Moderate'
+    } else if (aqi > 100 && aqi <= 150) {
+      return 'Sensitive'
+    } else {
+      return 'Unhealthy'
+    }
   }
 
   openSnackBar(message: string, action: string) {

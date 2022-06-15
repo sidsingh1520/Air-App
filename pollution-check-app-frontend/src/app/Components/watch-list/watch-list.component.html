@@ -6,8 +6,17 @@
 <div class="container">
   <h1 class="heading">Watch List</h1>
   <div class="cards clear">
-    <mat-card class="aqi-card" *ngFor="let d of data">
-      <mat-card-subtitle>CITY AQI INDEX</mat-card-subtitle>
+    <mat-card
+      [ngClass]="{
+        healthy_card: d.healthStatus === 'Healthy',
+        moderate_card: d.healthStatus === 'Moderate',
+        sensitive_card: d.healthStatus === 'Sensitive',
+        unhealthy_card: d.healthStatus === 'Unhealthy'
+      }"
+      class="aqi-card"
+      *ngFor="let d of data"
+    >
+      <mat-card-subtitle class="subtitle">CITY AQI INDEX</mat-card-subtitle>
       <mat-card-title class="clear">
         <mat-icon class="location-icon">my_location</mat-icon>
         <p class="aqi-location">{{ d.city }}, {{ d.state }}, {{ d.country }}</p>
@@ -18,7 +27,12 @@
       </mat-card-content>
       <mat-card-actions>
         <div class="buttons">
-          <button mat-fab color="primary" class="refresh-button">
+          <button
+            (click)="updateRecord(d)"
+            mat-fab
+            color="primary"
+            class="refresh-button"
+          >
             <mat-icon>refresh</mat-icon>
           </button>
           <button

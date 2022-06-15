@@ -6,10 +6,7 @@ import com.pollutionapp.user.util.exception.UserNotFoundException;
 
 public interface UserAuthService {
 	
-	/*
-	 * Should not modify this interface. You have to implement these methods in
-	 * corresponding Impl classes
-	 */
+
 
     public User findUserByEmailAndPassword(String userEmail, String password) throws UserNotFoundException;
 

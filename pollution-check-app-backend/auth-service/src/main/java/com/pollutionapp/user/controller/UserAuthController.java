@@ -34,7 +34,6 @@ public class UserAuthController {
     public UserAuthController(UserAuthService userAuthService) {
     	this.userAuthService = userAuthService;
 	}
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("/register")
 	public ResponseEntity<User> registerUser(@RequestBody User user) throws UserNotFoundException {
@@ -42,14 +41,14 @@ public class UserAuthController {
     		User userById = userAuthService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
     		if(userById == null) {
     			userAuthService.saveUser(user);
-    			logger.info("In controller - {}", "User is registered successfully.");
+
     			return new ResponseEntity<User>(user, HttpStatus.CREATED);
     		}
     	}catch(UserAlreadyExistsException e) {
-    		logger.info("In controller - {}", "User already exists.");
+
     		return new ResponseEntity<User>(HttpStatus.CONFLICT);
     	} 
-    	logger.info("In controller - {}", "User already exists.");
+
     	return new ResponseEntity<User>(HttpStatus.CONFLICT);
 	}
 
@@ -67,10 +66,10 @@ public class UserAuthController {
     		map.clear();
     		map.put("token", null);
     		map.put("message", exceptionMsg);
-    		logger.info("In controller - {}", "Unauthorized User.");
+
     		return new ResponseEntity<>(map, HttpStatus.UNAUTHORIZED);
     	}
-    	logger.info("In controller - {}", "Authorized User.");
+
     	return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 	@CrossOrigin(origins = "http://localhost:4200",exposedHeaders = "Access-Control-Allow-Origin")
@@ -106,8 +105,7 @@ public class UserAuthController {
     			.setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
     			.signWith(SignatureAlgorithm.HS256, "secretkey")
     			.compact();
-    	
-    	logger.info("In controller - {}", "JWT Token created Successfully.");
+
     	return jwtToken;
     }
 

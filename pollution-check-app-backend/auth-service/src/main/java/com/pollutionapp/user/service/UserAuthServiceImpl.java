@@ -19,10 +19,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 		super();
 		this.userAuthRepo = userAuthRepo;
 	}
-	
-	/*
-	 * This method should be used to find an existing User with correct password.
-	 */
+
 
 	@Override
     public User findUserByEmailAndPassword(String userEmail, String password) throws UserNotFoundException {
@@ -32,10 +29,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 		return null;
     }
 
-	/*
-	 * This method should be used to save a new User.
-	 */
-    
+
     @Override
     public boolean saveUser(User user) throws UserAlreadyExistsException {
     	Optional<User> isUserExists = userAuthRepo.findById(user.getEmail());

@@ -36,6 +36,11 @@ export class WatchlistService {
       .delete<CityData>(URL_WATCHLIST + '/' + id)
       .pipe(retry(1), catchError(this.handleError))
   }
+  updateDataInWatchList(cityData: CityData) {
+    return this.http
+      .put<CityData>(URL_WATCHLIST, cityData, httpOptions)
+      .pipe(retry(1), catchError(this.handleError))
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
