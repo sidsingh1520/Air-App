@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pollution</groupId>
-	<artifactId>discovery-service</artifactId>
+	<artifactId>eureka-discovery-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>discovery-service</name>
-	<description>Demo project for Spring Boot</description>
+	<name>eureka-discovery-service</name>
+	<description>Discovery Service for Pollution app</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
