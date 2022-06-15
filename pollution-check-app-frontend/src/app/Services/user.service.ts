@@ -40,8 +40,12 @@ export class UserService {
     )
   }
 
+  getUser(email:string){
+    return this.http.get(`${this.baseAuthUrl}/users/${email}`)
+  }
+
   //for login user
-  loginUser(token: string, email: string, userName: string) {
+  loginUser(token: string, email: string, userName: string ) {
     this.isLogged.next(true)
     localStorage.setItem('isLogged', '1')
     localStorage.setItem('token', token)

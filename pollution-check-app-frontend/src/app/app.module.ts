@@ -20,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http'
 import { SearchAqiComponent } from './Components/search-aqi/search-aqi.component'
 import { WatchListComponent } from './Components/watch-list/watch-list.component';
 import { ProfileComponent } from './Components/profile/profile.component';
-import { ConfirmPasswordValidatorDirective } from './Directives/confirm-password-validator.directive'
+import { ConfirmPasswordValidatorDirective } from './Directives/confirm-password-validator.directive';
+import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ConfirmPasswordValidatorDirective } from './Directives/confirm-password
     WatchListComponent,
     ProfileComponent,
     ConfirmPasswordValidatorDirective,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

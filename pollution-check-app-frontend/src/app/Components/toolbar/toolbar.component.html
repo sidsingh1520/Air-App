@@ -75,8 +75,8 @@
           <mat-icon aria-label="Expand More">expand_more</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Edit Profile</button>
-          <button mat-menu-item>Logout</button>
+          <button routerLink="/accounts/profile" mat-menu-item>Edit Profile</button>
+          <button (click)="logout()" mat-menu-item>Logout</button>
         </mat-menu>
       </div>
     </mat-toolbar>

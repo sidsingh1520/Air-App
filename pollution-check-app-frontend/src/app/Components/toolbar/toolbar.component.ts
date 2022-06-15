@@ -12,11 +12,16 @@ export class ToolbarComponent {
   titleFlag = true
   userName: string | null = ''
   isLoggedIn$: any
+
   constructor(private user: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.user.loggedInStatus
-    this.userName = localStorage.getItem('userName')
+    let name=localStorage.getItem("userName");
+    if(name!=null||name!=""){
+      console.log(name)
+      this.userName=name;
+    }
   }
   logout() {
     this.user.logout()
