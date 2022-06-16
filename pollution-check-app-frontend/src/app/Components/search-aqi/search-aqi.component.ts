@@ -36,6 +36,10 @@ export class SearchAqiComponent implements OnInit {
   ngOnInit(): void {
     this.iqair.getCountries().subscribe((country) => {
       this.tempCountries = country.data
+    },
+    (error) => {
+      console.log(error)
+      this.openSnackBar(String(error).substring(7), 'Ok')
     })
     this.iqair.getNearestAqi().subscribe((data) => {
       this.tempNearestCity = data
@@ -47,11 +51,19 @@ export class SearchAqiComponent implements OnInit {
         this.tempNearestCity.data.state +
         ', ' +
         this.tempNearestCity.data.country
+    },
+    (error) => {
+      console.log(error)
+      this.openSnackBar(String(error).substring(7), 'Ok')
     })
   }
   onSelectCountry(country: any) {
     this.iqair.getStates(String(country.value)).subscribe((state) => {
       this.tempStates = state.data
+    },
+    (error) => {
+      console.log(error)
+      this.openSnackBar(String(error).substring(7), 'Ok')
     })
     console.log(this.tempStates)
   }
@@ -60,6 +72,10 @@ export class SearchAqiComponent implements OnInit {
       .getCities(this.selectedCountry, String(state.value))
       .subscribe((city) => {
         this.tempCities = city.data
+      },
+      (error) => {
+        console.log(error)
+        this.openSnackBar(String(error).substring(7), 'Ok')
       })
   }
 
@@ -74,6 +90,10 @@ export class SearchAqiComponent implements OnInit {
         this.tempNearestCity = data
         this.aqiusNearest = this.tempNearestCity.data.current.pollution.aqius
         this.changeHealthStatus(this.aqiusNearest)
+      },
+      (error) => {
+        console.log(error)
+        this.openSnackBar(String(error).substring(7), 'Ok')
       })
     this.cardSubtitle = 'LIVE AQI INDEX'
 

@@ -69,8 +69,8 @@
       </button>
       <span *ngIf="titleFlag">Pollution-Check</span>
       <span class="menu-spacer"></span>
-      <div *ngIf="isLoggedIn$ | async as isLogged">
-        <button mat-button [matMenuTriggerFor]="menu">
+      <div >
+        <button *ngIf="isLoggedIn$ | async as isLogged" mat-button [matMenuTriggerFor]="menu">
           Hi, {{ userName }}
           <mat-icon aria-label="Expand More">expand_more</mat-icon>
         </button>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, retry, throwError } from 'rxjs';
 const tkey='cd521cd9-771c-4f2b-a2ff-d477fd689328'
 const key='c1ed9fe5-1a48-434d-a1d4-30d6a50accce'
-const URL_COUNTRY = 'http://localhost:8000/api/v1/countries';
+const BASE_URL = 'http://localhost:8080/api/v1';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -19,26 +19,26 @@ export class IqairService {
 
   getCountries(){
     return this.http
-    .get<any>(URL_COUNTRY)
+    .get<any>(`${BASE_URL}/countries`)
     .pipe(retry(1), catchError(this.handleError));
   }
 
   getStates(country: string) {
-    return this.http.get<any>('http://localhost:8000/api/v1/states/'+country).pipe(retry(0), catchError(this.handleError));
+    return this.http.get<any>(`${BASE_URL}/states/${country}`).pipe(retry(0), catchError(this.handleError));
   }
 
   getCities(country:string,state:string){
-    return this.http.get<any>('http://localhost:8000/api/v1/cities/'+country+'/'+state).pipe(retry(0),catchError(this.handleError));
+    return this.http.get<any>(`${BASE_URL}/cities/${country}/${state}`).pipe(retry(0),catchError(this.handleError));
   }
 
   
   getNearestAqi(){
-    return this.http.get<any>('http://localhost:8000/api/v1/nearest').pipe(retry(0),catchError(this.handleError));
+    return this.http.get<any>(`${BASE_URL}/nearest`).pipe(retry(0),catchError(this.handleError));
   }
 
 
   getDataStation(country:string,state:string,city:string){
-    return this.http.get<any>('http://localhost:8000/api/v1/cityData/'+country+'/'+state+'/'+city).pipe(retry(0),catchError(this.handleError));
+    return this.http.get<any>(`${BASE_URL}/cityData/${country}/${state}/${city}`).pipe(retry(0),catchError(this.handleError));
   }
 
 
@@ -55,9 +55,15 @@ export class IqairService {
       );
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
+    if (error.status === 500) {
+      return throwError(
+        () => new Error('Too Many Requests ! Try Again Later'),
+      )
+    } else {
+      return throwError(
+        () => new Error('Something went bad ! Please try again after sometime'),
+      )
+    }
   }
 
 }

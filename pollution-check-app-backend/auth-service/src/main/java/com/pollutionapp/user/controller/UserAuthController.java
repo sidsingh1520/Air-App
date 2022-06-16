@@ -22,7 +22,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserAuthController {
 

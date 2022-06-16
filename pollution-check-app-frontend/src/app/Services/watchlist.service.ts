@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core'
 import { catchError, retry, throwError } from 'rxjs'
 import { CityData } from '../Models/city-data'
 
-const URL_WATCHLIST = 'http://localhost:8200/api/v1/watchlist'
+const URL_WATCHLIST = 'http://localhost:8080/api/v3/watchlist'
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',

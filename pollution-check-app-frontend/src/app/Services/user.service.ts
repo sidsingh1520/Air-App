@@ -10,7 +10,7 @@ import { BehaviorSubject, catchError, throwError, retry } from 'rxjs'
   providedIn: 'root',
 })
 export class UserService {
-  baseAuthUrl = 'http://localhost:8100/api/v1'
+  baseAuthUrl = 'http://localhost:8080/api/v2'
   httpOptions: any = {
     headers: new HttpHeaders({
       Authorization: `Bearer ${this.getToken()}`,

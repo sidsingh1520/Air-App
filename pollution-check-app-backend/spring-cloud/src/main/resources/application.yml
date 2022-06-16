@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+eureka:
+  instance:
+    hostname: localhost
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: API-SERVICE
+          uri: lb://API-SERVICE
+          predicates:
+            - Path=/api/v1/**
+        - id: WATCHLIST-SERVICE
+          uri: lb://WATCHLIST-SERVICE
+          predicates:
+            - Path=/api/v3/watchlist/**
+        - id: AUTH-SERVICE
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/api/v2/**
