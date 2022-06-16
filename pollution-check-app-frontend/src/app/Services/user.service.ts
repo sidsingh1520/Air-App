@@ -41,10 +41,12 @@ export class UserService {
     return this.http.post(`${this.baseAuthUrl}/login`, user)
   }
 
-  validateToken(user: any) {
+  validateToken() {
+    let header=new HttpHeaders();
+    header.set("Authorization", `Bearer ${this.getToken()}`)
     return this.http.post(
-      `${this.baseAuthUrl}/authentication`,
-      this.httpOptions,
+      `${this.baseAuthUrl}/authenticate`,
+      header,
     )
   }
 

@@ -1,4 +1,4 @@
-package com.pollutionapp.user.util.exception;
+package com.pollutionapp.user.exception;
 
 public class UserAlreadyExistsException extends Exception {
 

@@ -4,16 +4,15 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 
 import com.pollutionapp.user.model.User;
 import com.pollutionapp.user.service.UserAuthService;
-import com.pollutionapp.user.util.exception.UserAlreadyExistsException;
-import com.pollutionapp.user.util.exception.UserNotFoundException;
+import com.pollutionapp.user.exception.UserAlreadyExistsException;
+import com.pollutionapp.user.exception.UserNotFoundException;
 import io.jsonwebtoken.Claims;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,6 +89,32 @@ public class UserAuthController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 
 	}
+
+	@GetMapping("users/{email}")
+	public ResponseEntity<User> getUserByEmail(@PathVariable String email){
+		Optional<User> user = userAuthService.getByEmail(email);
+		if (user.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK).body(user.get());
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+
+	@PutMapping("/users")
+	public ResponseEntity<User> changePassword(@RequestBody User user){
+		User updateUser = null;
+		Optional<User> existingUserOpt = userAuthService.getByEmail(user.getEmail());
+		if(existingUserOpt.isPresent()){
+			updateUser = userAuthService.updatePassword(existingUserOpt.get(),user.getPassword());
+
+		}
+		if(updateUser == null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(updateUser);
+	}
+
+
+
     
     public String getToken(String userEmail, String password) throws Exception{
     	if(userEmail == null || password == null) {

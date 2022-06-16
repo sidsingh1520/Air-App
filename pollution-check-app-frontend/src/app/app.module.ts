@@ -16,7 +16,7 @@ import { RegisterComponent } from './Components/register/register.component'
 import { NgMaterialModule } from './Modules/ng-material/ng-material.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HomeComponent } from './Components/home/home.component'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { SearchAqiComponent } from './Components/search-aqi/search-aqi.component'
 import { WatchListComponent } from './Components/watch-list/watch-list.component';
 import { ProfileComponent } from './Components/profile/profile.component';
@@ -25,6 +25,7 @@ import { PageNotFoundComponent } from './Components/page-not-found/page-not-foun
 import { OldPasswordValidatorDirective } from './Directives/old-password-validator.directive';
 import { OldConfirmValidatorDirective } from './Directives/old-confirm-validator.directive';
 import { ZoomHoverDirective } from './Directives/zoom-hover.directive'
+import { BasicAuthHttpInterceptor } from './Services/basic-auth-http.interceptor'
 
 @NgModule({
   declarations: [
@@ -57,7 +58,11 @@ import { ZoomHoverDirective } from './Directives/zoom-hover.directive'
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {  
+      provide:HTTP_INTERCEPTORS, useClass:BasicAuthHttpInterceptor, multi:true 
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

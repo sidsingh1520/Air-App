@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { Router } from '@angular/router'
-import { Observable } from 'rxjs'
 import { UserService } from 'src/app/Services/user.service'
 
 @Component({
@@ -15,6 +14,8 @@ export class ToolbarComponent {
 
   constructor(private user: UserService, private router: Router) {}
 
+
+  
   ngOnInit(): void {
     this.isLoggedIn$ = this.user.loggedInStatus
     this.UserName$ = this.user.currentUserName
