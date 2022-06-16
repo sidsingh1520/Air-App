@@ -54,7 +54,7 @@
         class="search-btn selects"
       >
         <mat-icon>search</mat-icon>
-        Search
+        <span class="search-button">Search</span>
       </button>
     </div>
   </form>
@@ -109,25 +109,25 @@
         *ngIf="healthStatus == 'Healthy'"
         mat-card-image
         src="assets\images\healthy.png"
-        alt="Photo of a Shiba Inu"
+        alt="health photo"
       />
       <img
         *ngIf="healthStatus == 'Moderate'"
         mat-card-image
         src="assets\images\moderate.png"
-        alt="Photo of a Shiba Inu"
+        alt="health photo"
       />
       <img
         *ngIf="healthStatus == 'Sensitive'"
         mat-card-image
         src="assets\images\sensitive.png"
-        alt="Photo of a Shiba Inu"
+        alt="health photo"
       />
       <img
         *ngIf="healthStatus == 'Unhealthy'"
         mat-card-image
         src="assets\images\unhealthy.png"
-        alt="Photo of a Shiba Inu"
+        alt="health photo"
       />
     </div>
     <div class="watchlist">

@@ -48,6 +48,7 @@
           formControlName="password"
           (change)="onChange()"
         />
+        <mat-icon matSuffix>lock</mat-icon>
         <mat-error
           *ngIf="(registerForm.controls['password'].touched || registerForm.controls['password'].dirty) && registerForm.controls['password'].errors?.['required']"
         >
@@ -73,6 +74,7 @@
           appConfirmPasswordValidator
           [password]="passwordTyped"
         />
+        <mat-icon matSuffix>lock</mat-icon>
         <mat-error
           *ngIf="(registerForm.controls['confirmPassword'].touched || registerForm.controls['confirmPassword'].dirty) && registerForm.controls['confirmPassword'].errors?.['required']"
         >
@@ -94,6 +96,7 @@
       type="submit"
       color="primary"
       mat-raised-button
+      class="register-button"
     >
       <mat-icon>save</mat-icon>
       Create

@@ -66,3 +66,51 @@ h2 {
   font-size: 1rem;
   margin-bottom: 10px;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .container {
+    width: 80%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px;
+    background-color: rgba(255, 255, 255, 70%);
+  }
+  .form-control {
+    border-radius: 0px;
+    width: 100%;
+    margin: 10px 0px;
+  }
+  .mat-form-field {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .register-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  mat-hint {
+    margin-left: 10px;
+    font-size: 1.2em;
+  }
+
+  .password-button {
+    padding: 8px 0px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .change-password-button {
+    padding: 8px 0px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+}

@@ -7,6 +7,10 @@
   filter: blur(5px);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .container {
   top: 0;
   position: relative;
@@ -14,14 +18,7 @@
   background-image: linear-gradient(rgb(90 171 218), rgba(255, 255, 255, 70%));
   height: auto;
 }
-
-.card-container {
-  top: 0;
-  position: relative;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 70%);
-  height: auto;
-}
+/* SEARCH PART */
 .form-control {
   border-radius: 0px;
   width: 100%;
@@ -38,7 +35,6 @@ h2 {
 mat-label {
   columns: black;
 }
-
 .search-btn {
   display: block;
   margin-top: 2px;
@@ -60,10 +56,15 @@ mat-icon {
   margin-left: 40px;
 }
 
-/*AQI CARD*/
+/* SEARCH PART */
 
-* {
-  box-sizing: border-box;
+/*AQI CARD*/
+.card-container {
+  top: 0;
+  position: relative;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 70%);
+  height: auto;
 }
 
 .aqi-card {
@@ -208,6 +209,7 @@ mat-icon {
 }
 /*WATCHLIST BUTTON*/
 
+/*CLEAR FLOATS*/
 .clear:before,
 .clear:after {
   content: '';
@@ -220,4 +222,136 @@ mat-icon {
 
 .clear {
   zoom: 1;
+}
+/*CLEAR FLOATS*/
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .selects {
+    float: none;
+    margin-left: 0;
+  }
+
+  .all-selects {
+    margin-left: 0px;
+  }
+
+  .form-control {
+    border-radius: 0px;
+    width: 100%;
+    margin: 0px 0px;
+  }
+  .mat-form-field {
+    width: 100%;
+    color: white;
+  }
+  h2 {
+    text-align: center;
+  }
+
+  mat-label {
+    columns: black;
+  }
+  .search-btn {
+    display: block;
+    margin-top: 2px;
+    padding: 6px 20px;
+    font-size: 1.2rem;
+    padding-right: 30px;
+    width: 100%;
+  }
+
+  mat-icon {
+    font-size: 2rem;
+    margin-bottom: 4px;
+    margin-right: 4px;
+  }
+
+  .health-image {
+    display: none;
+  }
+
+  .aqi {
+    margin-top: 0px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    width: 100%;
+    padding: 30px;
+    height: auto;
+    clear: both;
+    border-radius: 5px;
+    padding-bottom: 50px;
+  }
+
+  .aqi-card {
+    width: 90%;
+    margin: 0px;
+
+    height: 300px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    margin-bottom: 0px;
+  }
+
+  .container {
+    width: 100vw;
+  }
+
+  .aqi-unit {
+    display: block;
+    font-size: 1.5rem;
+    float: left;
+  }
+
+  .aqi-value {
+    display: block;
+    font-size: 2.5rem;
+    float: right;
+  }
+
+  .status {
+    margin-left: 0;
+    padding: 0;
+    float: none;
+    height: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .status-heading {
+    display: block;
+    font-size: 1.1rem;
+    height: auto;
+    padding: 20px;
+  }
+
+  .status-health {
+    display: block;
+    font-size: 1.8rem;
+  }
+
+  .status-city {
+    font-size: 1.4rem;
+    clear: both;
+    display: block;
+    padding: 10px;
+    margin-top: 26px;
+  }
+
+  .location {
+    text-align: center;
+  }
+
+  .location-icon {
+    display: none;
+  }
+
+  .watchlist-btn {
+    margin: 0px;
+    width: 100%;
+  }
 }
