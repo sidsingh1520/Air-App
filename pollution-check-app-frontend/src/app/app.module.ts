@@ -23,7 +23,8 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { ConfirmPasswordValidatorDirective } from './Directives/confirm-password-validator.directive';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
 import { OldPasswordValidatorDirective } from './Directives/old-password-validator.directive';
-import { OldConfirmValidatorDirective } from './Directives/old-confirm-validator.directive'
+import { OldConfirmValidatorDirective } from './Directives/old-confirm-validator.directive';
+import { ZoomHoverDirective } from './Directives/zoom-hover.directive'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { OldConfirmValidatorDirective } from './Directives/old-confirm-validator
     PageNotFoundComponent,
     OldPasswordValidatorDirective,
     OldConfirmValidatorDirective,
+    ZoomHoverDirective,
   ],
   imports: [
     BrowserModule,
