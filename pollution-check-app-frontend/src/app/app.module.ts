@@ -21,7 +21,9 @@ import { SearchAqiComponent } from './Components/search-aqi/search-aqi.component
 import { WatchListComponent } from './Components/watch-list/watch-list.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ConfirmPasswordValidatorDirective } from './Directives/confirm-password-validator.directive';
-import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component'
+import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
+import { OldPasswordValidatorDirective } from './Directives/old-password-validator.directive';
+import { OldConfirmValidatorDirective } from './Directives/old-confirm-validator.directive'
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { PageNotFoundComponent } from './Components/page-not-found/page-not-foun
     ProfileComponent,
     ConfirmPasswordValidatorDirective,
     PageNotFoundComponent,
+    OldPasswordValidatorDirective,
+    OldConfirmValidatorDirective,
   ],
   imports: [
     BrowserModule,

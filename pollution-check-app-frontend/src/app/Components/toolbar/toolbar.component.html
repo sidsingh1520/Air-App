@@ -20,6 +20,15 @@
       <a
         *ngIf="isLoggedIn$ | async as isLogged"
         mat-list-item
+        matTooltip="profile"
+        routerLink="/accounts/profile"
+      >
+        <mat-icon mat-list-icon class="">account_circle</mat-icon>
+        <span>User Profile</span>
+      </a>
+      <a
+        *ngIf="isLoggedIn$ | async as isLogged"
+        mat-list-item
         matTooltip="searchAqi"
         routerLink="search"
       >
@@ -69,13 +78,29 @@
       </button>
       <span *ngIf="titleFlag">Pollution-Check</span>
       <span class="menu-spacer"></span>
-      <div >
-        <button *ngIf="isLoggedIn$ | async as isLogged" mat-button [matMenuTriggerFor]="menu">
-          Hi, {{ userName }}
-          <mat-icon aria-label="Expand More">expand_more</mat-icon>
+      <div *ngIf="isLoggedIn$ | async as isLogged">
+        <button mat-icon-button routerLink="/home" matTooltip="Home">
+          <mat-icon>home</mat-icon>
+        </button>
+        <button mat-icon-button routerLink="/history" matTooltip="Watch List">
+          <mat-icon>library_books</mat-icon>
+        </button>
+        <button mat-icon-button routerLink="/search" matTooltip="Search AQI">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button
+          mat-button
+          class="user-button"
+          [matMenuTriggerFor]="menu"
+          *ngIf="UserName$ | async as UserName"
+        >
+          Hi, {{ UserName }}
+          <mat-icon aria-label="Expand More">arrow_drop_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button routerLink="/accounts/profile" mat-menu-item>Edit Profile</button>
+          <button routerLink="/accounts/profile" mat-menu-item>
+            User Profile
+          </button>
           <button (click)="logout()" mat-menu-item>Logout</button>
         </mat-menu>
       </div>

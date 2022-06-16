@@ -23,23 +23,32 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
   result: any
-  userNameData:any
-  userName:string=""
+  userNameData: any
+  userName: string = ''
+
   login() {
     console.log(this.loginForm.value)
     this.userService.doLogin(this.loginForm.value).subscribe(
       (response) => {
         this.result = response
-        this.userService.getUser(this.loginForm.value.email).subscribe((data)=>{
-          this.userNameData=data;
-          console.log(this.userNameData)
-          this.userName=this.userNameData.name;
-          console.log(this.userName)
-          this.userService.loginUser(this.result.token,this.loginForm.value.email,this.userName);
-        })
-        this.openSnackBar(this.result.message, 'Ok')
-        this.router.navigate(['search'])
+        this.userService
+          .getUser(this.loginForm.value.email)
+          .subscribe((data) => {
+            this.userNameData = data
+            console.log(this.userNameData)
+            this.userName = this.userNameData.name
+            console.log(this.userName)
+            this.userService.loginUser(
+              this.result.token,
+              this.loginForm.value.email,
+              this.userName,
+              this.loginForm.value.password,
+            )
+            this.openSnackBar(this.result.message, 'Ok')
+            this.router.navigate(['search'])
+          })
       },
       (error) => {
         this.openSnackBar(error.error.message, 'Ok')

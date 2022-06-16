@@ -10,18 +10,14 @@ import { UserService } from 'src/app/Services/user.service'
 })
 export class ToolbarComponent {
   titleFlag = true
-  userName: string | null = ''
   isLoggedIn$: any
+  UserName$: any
 
   constructor(private user: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.user.loggedInStatus
-    let name=localStorage.getItem("userName");
-    if(name!=null||name!=""){
-      console.log(name)
-      this.userName=name;
-    }
+    this.UserName$ = this.user.currentUserName
   }
   logout() {
     this.user.logout()

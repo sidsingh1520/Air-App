@@ -5,7 +5,12 @@ import {
 } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, catchError, throwError, retry } from 'rxjs'
-
+import { User } from '../Models/user'
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +25,9 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   }
   isLogged = new BehaviorSubject<boolean>(this.isLoggedIn())
+  UserName = new BehaviorSubject<string | null>(
+    localStorage.getItem('userName'),
+  )
 
   constructor(private http: HttpClient) {}
 
@@ -40,17 +48,24 @@ export class UserService {
     )
   }
 
-  getUser(email:string){
-    return this.http.get(`${this.baseAuthUrl}/users/${email}`)
+  getUser(email: string) {
+    return this.http.get<User>(`${this.baseAuthUrl}/users/${email}`)
+  }
+
+  changeUserPassword(user: User) {
+    return this.http
+      .put<User>(`${this.baseAuthUrl}/users/`, user, httpOptions)
+      .pipe(retry(1), catchError(this.handleError))
   }
 
   //for login user
-  loginUser(token: string, email: string, userName: string ) {
+  loginUser(token: string, email: string, userName: string, password: string) {
     this.isLogged.next(true)
     localStorage.setItem('isLogged', '1')
     localStorage.setItem('token', token)
     localStorage.setItem('email', email)
     localStorage.setItem('userName', userName)
+    localStorage.setItem('password', password)
     return true
   }
 
@@ -69,6 +84,7 @@ export class UserService {
     localStorage.removeItem('token')
     localStorage.removeItem('email')
     localStorage.removeItem('userName')
+    localStorage.removeItem('password')
     return true
   }
 
@@ -78,6 +94,10 @@ export class UserService {
 
   get loggedInStatus() {
     return this.isLogged.asObservable()
+  }
+
+  get currentUserName() {
+    return this.UserName.asObservable()
   }
 
   private handleError(error: HttpErrorResponse) {

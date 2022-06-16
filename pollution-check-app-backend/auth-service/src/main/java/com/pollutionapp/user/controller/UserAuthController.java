@@ -1,5 +1,6 @@
 package com.pollutionapp.user.controller;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class UserAuthController {
 
     @PostMapping("/register")
 	public ResponseEntity<User> registerUser(@RequestBody User user) throws UserNotFoundException {
+		user.setCreatedAt(LocalDateTime.now());
     	try {
     		User userById = userAuthService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
     		if(userById == null) {

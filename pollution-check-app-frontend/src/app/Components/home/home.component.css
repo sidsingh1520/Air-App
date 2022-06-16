@@ -37,21 +37,22 @@ div {
   margin-left: 40px;
   display: block;
 
-  font-size: 4rem;
   text-align: left;
   line-height: 120%;
 }
 
 .part-1 {
-  font-family: 'Times New Roman', Times, serif;
   font-weight: 800;
+  font-size: 3.8rem;
   color: black;
+  text-shadow: -1.5px 0 white, 0 1.5px white, 1.5px 0 white, 0 -1.5px white;
 }
 
 .part-2 {
-  font-family: 'Times New Roman', Times, serif;
-  font-weight: 100;
+  font-weight: 600;
   color: #2a285f;
+  font-size: 4rem;
+  text-shadow: -1.5px 0 white, 0 1.5px white, 1.5px 0 white, 0 -1.5px white;
 }
 
 .clear:before,
