@@ -2,14 +2,14 @@ package com.pollution.watchlistservice.controller;
 
 import java.util.List;
 
-import com.pollution.watchlistservice.dto.CityDataDto;
+import com.pollution.watchlistservice.dto.WatchlistDto;
 import com.pollution.watchlistservice.exceptions.CityDataAlreadyExistsException;
 import com.pollution.watchlistservice.service.WatchlistServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
-import com.pollution.watchlistservice.domain.CityData;
+import com.pollution.watchlistservice.domain.Watchlist;
 import com.pollution.watchlistservice.exceptions.CityDataNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +27,9 @@ public class WatchlistController {
 
 
     @GetMapping("/{userEmail}")
-    public ResponseEntity<List<CityData>> findAll(@PathVariable String userEmail) throws CityDataNotFoundException {
+    public ResponseEntity<List<Watchlist>> findAll(@PathVariable String userEmail) throws CityDataNotFoundException {
 
-        List<CityData> response = service.findCityDataByUserEmail(userEmail);
+        List<Watchlist> response = service.findCityDataByUserEmail(userEmail);
         if(response.isEmpty()){
             throw new CityDataNotFoundException("The data for this city doesn't exist");
         }
@@ -38,9 +38,9 @@ public class WatchlistController {
 
 
     @PostMapping({"", "/"})
-    public ResponseEntity<CityData> add(@RequestBody CityDataDto requestData) throws CityDataAlreadyExistsException {
-        CityData cityData = new CityData(requestData);
-        CityData response= service.addToWishlist(cityData);
+    public ResponseEntity<Watchlist> add(@RequestBody WatchlistDto requestData) throws CityDataAlreadyExistsException {
+        Watchlist watchlist = new Watchlist(requestData);
+        Watchlist response= service.addToWatchlist(watchlist);
         if(response == null){
             throw new CityDataAlreadyExistsException("The data for this city already exists.");
         }
@@ -48,15 +48,15 @@ public class WatchlistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CityData> remove(@PathVariable Integer id) throws CityDataNotFoundException {
+    public ResponseEntity<Watchlist> remove(@PathVariable Integer id) throws CityDataNotFoundException {
         service.remove(id);
        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PutMapping({"", "/"})
-    public ResponseEntity<CityData> updateAqiUS(@RequestBody CityDataDto requestData) throws CityDataNotFoundException {
-        CityData cityData = new CityData(requestData);
-        CityData response = service.updateAqiUS(cityData);
+    public ResponseEntity<Watchlist> updateAqiUS(@RequestBody WatchlistDto requestData) throws CityDataNotFoundException {
+        Watchlist watchlist = new Watchlist(requestData);
+        Watchlist response = service.updateAqiUS(watchlist);
         if(response == null){
             throw new CityDataNotFoundException("The data for this city doesn't exist");
         }

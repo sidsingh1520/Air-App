@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityDataDto {
+public class WatchlistDto {
 
     private Integer id;
     private String userEmail;
