@@ -10,6 +10,7 @@ import com.pollutionapp.user.service.UserAuthService;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -70,6 +71,7 @@ public class UserAuthControllerTest {
     }
 
     @Test
+    @DisplayName("Test for registering user")
     public void testRegisterUser() throws Exception {
         Mockito.when(userAuthService.saveUser(user)).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v2/register").contentType(MediaType.APPLICATION_JSON).content(jsonToString(user)))
@@ -78,6 +80,7 @@ public class UserAuthControllerTest {
 
 
     @Test
+    @DisplayName("Test for login user")
     public void testLoginUser() throws Exception {
         String email = "jhon@gmail.com";
         String password = "123456";
@@ -88,6 +91,7 @@ public class UserAuthControllerTest {
     }
 
     @Test
+    @DisplayName("Test for get user by email")
     public void testGetUserByEmail() throws Exception {
         String email = "jhon@gmail.com";
         Mockito.when(userAuthService.saveUser(user)).thenReturn(true);
@@ -97,6 +101,7 @@ public class UserAuthControllerTest {
     }
 
     @Test
+    @DisplayName("Test for change Password")
     public void testUpdatePassword() throws Exception {
         String email = "jhon@gmail.com";
         User updatedUser=user;
@@ -109,7 +114,6 @@ public class UserAuthControllerTest {
     }
 
 
-    // Parsing String format data into JSON format
     private static String jsonToString(final Object obj) throws JsonProcessingException {
         String result;
         try {

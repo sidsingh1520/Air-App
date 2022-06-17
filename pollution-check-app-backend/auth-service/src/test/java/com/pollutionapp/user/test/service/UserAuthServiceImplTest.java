@@ -1,5 +1,6 @@
 package com.pollutionapp.user.test.service;
 
+
 import com.pollutionapp.user.model.User;
 import com.pollutionapp.user.repository.UserRepository;
 import com.pollutionapp.user.service.UserAuthServiceImpl;
@@ -7,19 +8,15 @@ import com.pollutionapp.user.exception.UserAlreadyExistsException;
 import com.pollutionapp.user.exception.UserNotFoundException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-
-
 public class UserAuthServiceImplTest {
 
     @Mock
@@ -44,6 +41,7 @@ public class UserAuthServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test for saving user success")
     public void testSaveUserSuccess() throws UserAlreadyExistsException {
 
         Mockito.when(userAuthRepository.save(user)).thenReturn(user);
@@ -51,19 +49,17 @@ public class UserAuthServiceImplTest {
         assertEquals(true, flag);
 
     }
-
-
     @Test
+    @DisplayName("Test for saving user  failure")
     public void testSaveUserFailure()  {
-
         Mockito.when(userAuthRepository.findById("jhon@gmail.com")).thenReturn(optional);
         Mockito.when(userAuthRepository.save(user)).thenReturn(user);
         assertThrows(
         		UserAlreadyExistsException.class,
                     () -> { userAuthServiceImpl.saveUser(user); });
-
     }
     @Test
+    @DisplayName("Test for find user by email")
     public void testFindByEmail() throws UserNotFoundException {
         Mockito.when(userAuthRepository.findById("jhon@gmail.com")).thenReturn(optional);
         User fetchedUser = userAuthServiceImpl.getByEmail("jhon@gmail.com").get();
@@ -71,6 +67,7 @@ public class UserAuthServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test for updating user password")
     public void testUpdatePassword() throws UserNotFoundException {
         Mockito.when(userAuthRepository.findById("jhon@gmail.com")).thenReturn(optional);
         User fetchedUser = userAuthServiceImpl.getByEmail("jhon@gmail.com").get();

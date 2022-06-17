@@ -12,7 +12,7 @@ import { AuthGuard } from './Guard/auth.guard'
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'accounts/login', component: LoginComponent },
-  { path: 'accounts/profile', component: ProfileComponent },
+  { path: 'accounts/profile',canActivate:[AuthGuard], component: ProfileComponent },
   { path: 'search', canActivate: [AuthGuard], component: SearchAqiComponent },
   { path: 'history', canActivate: [AuthGuard], component: WatchListComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

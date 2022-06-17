@@ -4,6 +4,7 @@ import com.pollutionapp.user.model.User;
 import com.pollutionapp.user.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +34,7 @@ public class UserRepositoryTest {
     
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         user = new User();
         user.setName("Jhon123");
         user.setPassword("123456");
@@ -48,6 +49,7 @@ public class UserRepositoryTest {
 
 
     @Test
+    @DisplayName("Test for user register Successfull")
     public void testRegisterUserSuccess() {
     	userAuthRepository.save(user);
         User fetchUser = userAuthRepository.findById(user.getEmail()).get();
@@ -55,6 +57,7 @@ public class UserRepositoryTest {
     }
 
     @Test
+    @DisplayName("Test for user login Successfull")
     public void testLoginUserSuccess() {
     	userAuthRepository.save(user);
         User fetchUser = userAuthRepository.findById(user.getEmail()).get();

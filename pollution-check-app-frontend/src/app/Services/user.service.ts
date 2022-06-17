@@ -28,6 +28,8 @@ export class UserService {
   UserName = new BehaviorSubject<string | null>(
     localStorage.getItem('userName'),
   )
+  result:any
+  valid:boolean=false
 
   constructor(private http: HttpClient) {}
 
@@ -74,10 +76,22 @@ export class UserService {
   isLoggedIn() {
     let token = localStorage.getItem('token')
     if (token == undefined || token == null || token == '') {
-      return false
+      this.valid=false;
     } else {
-      return true
+      this.valid=true;
     }
+    this.validateToken().subscribe((response)=>{
+      console.log(response);
+      this.result=response;
+      if(this.result.message=="Valid token"){
+        this.valid=true;
+      }
+      else{
+        this.valid=false;
+      }
+    }
+    )
+    return this.valid;
   }
 
   logout() {

@@ -8,11 +8,13 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
+import com.pollutionapp.user.dto.UserDto;
 import com.pollutionapp.user.model.User;
 import com.pollutionapp.user.service.UserAuthService;
 import com.pollutionapp.user.exception.UserAlreadyExistsException;
 import com.pollutionapp.user.exception.UserNotFoundException;
 import io.jsonwebtoken.Claims;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,31 +32,33 @@ public class UserAuthController {
 	private Map<String, String> map = new HashMap<>();
 	@Autowired
 	private UserAuthService userAuthService;
-	
+
+	@Autowired
+	private ModelMapper modelMapper;
+
     public UserAuthController(UserAuthService userAuthService) {
     	this.userAuthService = userAuthService;
 	}
 
     @PostMapping("/register")
-	public ResponseEntity<User> registerUser(@RequestBody User user) throws UserNotFoundException {
+	public ResponseEntity<User> registerUser(@RequestBody UserDto userDto) throws UserNotFoundException {
+		User user = modelMapper.map(userDto, User.class);
 		user.setCreatedAt(LocalDateTime.now());
     	try {
     		User userById = userAuthService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
     		if(userById == null) {
     			userAuthService.saveUser(user);
-
     			return new ResponseEntity<User>(user, HttpStatus.CREATED);
     		}
     	}catch(UserAlreadyExistsException e) {
-
     		return new ResponseEntity<User>(HttpStatus.CONFLICT);
-    	} 
-
+    	}
     	return new ResponseEntity<User>(HttpStatus.CONFLICT);
 	}
 
     @PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user) throws ServletException{
+	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws ServletException{
+		User user = modelMapper.map(userDto, User.class);
     	String jwtToken = "";
     	try {
     		jwtToken = getToken(user.getEmail(), user.getPassword());
