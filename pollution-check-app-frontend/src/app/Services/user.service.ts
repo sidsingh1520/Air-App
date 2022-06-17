@@ -33,13 +33,13 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: any) {
+  register(user: User) {
     return this.http
       .post(`${this.baseAuthUrl}/register`, user, this.httpregOptions)
       .pipe(retry(1), catchError(this.handleError))
   }
 
-  doLogin(user: any) {
+  doLogin(user: User) {
     return this.http.post(`${this.baseAuthUrl}/login`, user)
   }
 
