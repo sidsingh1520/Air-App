@@ -42,7 +42,7 @@ public class UserAuthController {
 
     @PostMapping("/register")
 	public ResponseEntity<User> registerUser(@RequestBody UserDto userDto) throws UserNotFoundException {
-		User user = modelMapper.map(userDto, User.class);
+		User user = new User(userDto);
 		user.setCreatedAt(LocalDateTime.now());
     	try {
     		User userById = userAuthService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
@@ -58,7 +58,7 @@ public class UserAuthController {
 
     @PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws ServletException{
-		User user = modelMapper.map(userDto, User.class);
+		User user = new User(userDto);
     	String jwtToken = "";
     	try {
     		jwtToken = getToken(user.getEmail(), user.getPassword());

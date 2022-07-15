@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pollutionapp.user.controller.UserAuthController;
+import com.pollutionapp.user.dto.UserDto;
 import com.pollutionapp.user.model.User;
 import com.pollutionapp.user.service.UserAuthService;
 
@@ -44,7 +45,7 @@ public class UserAuthControllerTest {
 
     
     private User user;
-
+    private UserDto userDto;
     @InjectMocks
     private UserAuthController userAuthController;
 
@@ -54,7 +55,11 @@ public class UserAuthControllerTest {
 
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(userAuthController).build();
-
+        userDto=new UserDto();
+        userDto.setName("Jhon123");
+        userDto.setPassword("123456");
+        userDto.setEmail("jhon@gmail.com");
+        userDto.setCreatedAt(LocalDateTime.now());
         user = new User();
         user.setName("Jhon123");
         user.setPassword("123456");
@@ -78,7 +83,6 @@ public class UserAuthControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated()).andDo(MockMvcResultHandlers.print());
     }
 
-
     @Test
     @DisplayName("Test for login user")
     public void testLoginUser() throws Exception {
@@ -86,7 +90,7 @@ public class UserAuthControllerTest {
         String password = "123456";
         Mockito.when(userAuthService.saveUser(user)).thenReturn(true);
         Mockito.when(userAuthService.findUserByEmailAndPassword(email, password)).thenReturn(user);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v2/login").contentType(MediaType.APPLICATION_JSON).content(jsonToString(user)))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v2/login").contentType(MediaType.APPLICATION_JSON).content(jsonToString(userDto)))
                 .andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
     }
 

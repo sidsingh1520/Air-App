@@ -1,5 +1,6 @@
 package com.pollutionapp.user.model;
 
+import com.pollutionapp.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +17,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User{
+public class User {
 	@Id
 	@Column(unique = true)
 	private String email;
 	private String name;
 	private String password;
 	private LocalDateTime createdAt;
+
+	public User(UserDto userDto){
+		this.email= userDto.getEmail();
+		this.name= userDto.getName();
+		this.password= userDto.getPassword();
+		this.createdAt=userDto.getCreatedAt();
+	}
 }
